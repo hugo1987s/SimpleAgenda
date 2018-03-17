@@ -92,4 +92,9 @@ public class VentanaPersona extends JFrame
 		return btnAgregarPersona;
 	}
 
+	public JButton getBtnABMLocalidades()
+	{
+		return btnABMLocalidades;
+	}
+
 }

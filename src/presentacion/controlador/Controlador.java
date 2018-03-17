@@ -3,17 +3,20 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
+import dto.PersonaDTO;
 import modelo.Agenda;
 import presentacion.reportes.ReporteAgenda;
+import presentacion.vista.VentanaLocalidad;
 import presentacion.vista.VentanaPersona;
 import presentacion.vista.Vista;
-import dto.PersonaDTO;
 
 public class Controlador implements ActionListener
 {
 		private Vista vista;
 		private List<PersonaDTO> personas_en_tabla;
 		private VentanaPersona ventanaPersona; 
+		private VentanaLocalidad ventanaLocalidad;
 		private Agenda agenda;
 		
 		public Controlador(Vista vista, Agenda agenda)
@@ -74,6 +77,9 @@ public class Controlador implements ActionListener
 				this.agenda.agregarPersona(nuevaPersona);
 				this.llenarTabla();
 				this.ventanaPersona.dispose();
+			} else if(e.getSource() == this.ventanaPersona.getBtnABMLocalidades())
+			{
+				this.ventanaLocalidad = new VentanaLocalidad(this);
 			}
 		}
 
