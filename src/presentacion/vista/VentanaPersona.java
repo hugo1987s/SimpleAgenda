@@ -25,7 +25,8 @@ public class VentanaPersona extends JFrame
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
-
+	private JButton btnAgregarContacto;
+	
 	public VentanaPersona(Controlador controlador) 
 	{
 		super();
@@ -134,12 +135,16 @@ public class VentanaPersona extends JFrame
 		panel.add(comboBox);
 		
 		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(133, 303, 199, 22);
+		comboBox_1.setBounds(133, 303, 246, 22);
 		panel.add(comboBox_1);
 		
 		JButton btnCerrar = new JButton("Cerrar");
 		btnCerrar.setBounds(341, 350, 89, 23);
 		panel.add(btnCerrar);
+		
+		btnAgregarContacto = new JButton("...");
+		btnAgregarContacto.setBounds(391, 302, 39, 25);
+		panel.add(btnAgregarContacto);
 		
 		this.setVisible(true);
 	}
@@ -157,6 +162,11 @@ public class VentanaPersona extends JFrame
 	public JButton getBtnAgregarPersona() 
 	{
 		return btnAgregarPersona;
+	}
+	
+	public JButton getBtnAgregarContacto() 
+	{
+		return btnAgregarContacto;
 	}
 }
 

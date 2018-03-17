@@ -12,6 +12,7 @@ import presentacion.reportes.ReporteAgenda;
 import presentacion.vista.VentanaPersona;
 import presentacion.vista.Vista;
 import dto.PersonaDTO;
+import dto.TipoContactoDTO;
 
 public class Controlador implements ActionListener
 {
@@ -94,7 +95,13 @@ public class Controlador implements ActionListener
 				this.ventanaPersona.dispose();
 			}
 			
-			
+			else if(e.getSource() == this.ventanaPersona.getBtnAgregarContacto())
+			{
+				TipoContactoDTO nuevoTipoContacto = new TipoContactoDTO(0, "");
+				this.agenda.agregarTipoContacto(nuevoTipoContacto);
+				//this.llenarTablaTipoContacto();
+				this.ventanaPersona.dispose();
+			}
 			
 		}
 
