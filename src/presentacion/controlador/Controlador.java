@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+import dto.LocalidadDTO;
 import dto.PersonaDTO;
 import modelo.Agenda;
 import presentacion.reportes.ReporteAgenda;
@@ -15,6 +16,7 @@ public class Controlador implements ActionListener
 {
 	private Vista vista;
 	private List<PersonaDTO> personas_en_tabla;
+	private List<LocalidadDTO> localidades_en_tabla;
 	private VentanaPersona ventanaPersona;
 	private VentanaLocalidad ventanaLocalidad;
 	private Agenda agenda;
@@ -49,6 +51,21 @@ public class Controlador implements ActionListener
 		}
 	}
 
+	public void llenarTablaLocalidades()
+	{
+		this.ventanaLocalidad.getModelLocalidades().setRowCount(0);
+		this.ventanaLocalidad.getModelLocalidades().setColumnCount(0);
+		this.ventanaLocalidad.getModelLocalidades().setColumnIdentifiers(this.ventanaLocalidad.getNombreColumnas());
+
+		this.localidades_en_tabla = agenda.obtenerLocalidades();
+		for (int i = 0; i < this.localidades_en_tabla.size(); i++)
+		{
+			Object[] fila = { this.localidades_en_tabla.get(i).getNombre(),
+					this.localidades_en_tabla.get(i).getCodigoPostal() };
+			this.ventanaLocalidad.getModelLocalidades().addRow(fila);
+		}
+	}
+
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == this.vista.getBtnAgregar())
@@ -78,6 +95,7 @@ public class Controlador implements ActionListener
 		} else if (e.getSource() == this.ventanaPersona.getBtnABMLocalidades())
 		{
 			this.ventanaLocalidad = new VentanaLocalidad(this);
+			this.llenarTablaLocalidades();
 		}
 	}
 

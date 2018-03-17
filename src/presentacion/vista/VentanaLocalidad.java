@@ -65,5 +65,15 @@ public class VentanaLocalidad extends JFrame
 		
 		this.setVisible(true);
 	}
+	
+	public DefaultTableModel getModelLocalidades() 
+	{
+		return modelLocalidades;
+	}
+
+	public String[] getNombreColumnas()
+	{
+		return nombreColumnas;
+	}
 
 }
