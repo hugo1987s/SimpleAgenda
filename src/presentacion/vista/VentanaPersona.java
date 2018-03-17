@@ -2,6 +2,7 @@ package presentacion.vista;
 
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -9,7 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import presentacion.controlador.Controlador;
-import javax.swing.JComboBox;
+
 
 public class VentanaPersona extends JFrame 
 {
@@ -19,13 +20,14 @@ public class VentanaPersona extends JFrame
 	private JTextField txtTelefono;
 	private JButton btnAgregarPersona;
 	private Controlador controlador;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
-	private JTextField textField_5;
-	private JButton btnAgregarContacto;
+	private JTextField txtAltura;
+	private JTextField txtCalle;
+	private JTextField txtDepartamento;
+	private JTextField txtPiso;
+	private JTextField txtFechaNacimiento;
+	private JTextField txtEmail;
+	private JButton btnABMContactos;
+	private JButton btnABMLocalidades;
 	
 	public VentanaPersona(Controlador controlador) 
 	{
@@ -100,51 +102,57 @@ public class VentanaPersona extends JFrame
 		lblTipoDeContacto.setBounds(10, 307, 149, 14);
 		panel.add(lblTipoDeContacto);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(133, 107, 67, 20);
-		panel.add(textField);
+		txtAltura = new JTextField();
+		txtAltura.setColumns(10);
+		txtAltura.setBounds(133, 107, 67, 20);
+		panel.add(txtAltura);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(133, 74, 297, 20);
-		panel.add(textField_1);
+		txtCalle = new JTextField();
+		txtCalle.setColumns(10);
+		txtCalle.setBounds(133, 74, 297, 20);
+		panel.add(txtCalle);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(133, 172, 67, 20);
-		panel.add(textField_2);
+		txtDepartamento = new JTextField();
+		txtDepartamento.setColumns(10);
+		txtDepartamento.setBounds(133, 172, 67, 20);
+		panel.add(txtDepartamento);
 		
-		textField_3 = new JTextField();
-		textField_3.setColumns(10);
-		textField_3.setBounds(133, 139, 67, 20);
-		panel.add(textField_3);
+		txtPiso = new JTextField();
+		txtPiso.setColumns(10);
+		txtPiso.setBounds(133, 139, 67, 20);
+		panel.add(txtPiso);
 		
-		textField_4 = new JTextField();
-		textField_4.setColumns(10);
-		textField_4.setBounds(168, 273, 164, 20);
-		panel.add(textField_4);
+		txtFechaNacimiento = new JTextField();
+		txtFechaNacimiento.setColumns(10);
+		txtFechaNacimiento.setBounds(168, 273, 164, 20);
+		panel.add(txtFechaNacimiento);
 		
-		textField_5 = new JTextField();
-		textField_5.setColumns(10);
-		textField_5.setBounds(133, 240, 297, 20);
-		panel.add(textField_5);
+		txtEmail = new JTextField();
+		txtEmail.setColumns(10);
+		txtEmail.setBounds(133, 240, 297, 20);
+		panel.add(txtEmail);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(133, 205, 297, 22);
-		panel.add(comboBox);
+		JComboBox cboLocalidad = new JComboBox();
+		cboLocalidad.setBounds(133, 205, 246, 22);
+		panel.add(cboLocalidad);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setBounds(133, 303, 246, 22);
-		panel.add(comboBox_1);
+		JComboBox cboContacto = new JComboBox();
+		cboContacto.setBounds(133, 303, 246, 22);
+		panel.add(cboContacto);
 		
 		JButton btnCerrar = new JButton("Cerrar");
 		btnCerrar.setBounds(341, 350, 89, 23);
 		panel.add(btnCerrar);
 		
-		btnAgregarContacto = new JButton("...");
-		btnAgregarContacto.setBounds(391, 302, 39, 25);
-		panel.add(btnAgregarContacto);
+		btnABMContactos = new JButton("...");
+		btnABMContactos.setBounds(391, 302, 39, 25);
+		btnABMContactos.addActionListener(this.controlador);
+		panel.add(btnABMContactos);
+		
+		btnABMLocalidades = new JButton("...");
+		btnABMLocalidades.setBounds(391, 204, 39, 25);
+		btnABMLocalidades.addActionListener(this.controlador);
+		panel.add(btnABMLocalidades);
 		
 		this.setVisible(true);
 	}
@@ -164,9 +172,15 @@ public class VentanaPersona extends JFrame
 		return btnAgregarPersona;
 	}
 	
-	public JButton getBtnAgregarContacto() 
+	public JButton getBtnABMContactos() 
 	{
-		return btnAgregarContacto;
+		return btnABMContactos;
 	}
+	
+	public JButton getBtnABMLocalidades()
+	{
+		return btnABMLocalidades;
+	}
+	
 }
 

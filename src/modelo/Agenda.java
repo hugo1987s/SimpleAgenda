@@ -2,9 +2,11 @@ package modelo;
 
 import java.util.List;
 
+import dto.LocalidadDTO;
 import dto.PersonaDTO;
-import dto.TipoContactoDTO;
+import dto.ContactoDTO;
 import persistencia.dao.interfaz.DAOAbstractFactory;
+import persistencia.dao.interfaz.LocalidadDAO;
 import persistencia.dao.interfaz.PersonaDAO;
 import persistencia.dao.interfaz.TipoContactoDAO;
 
@@ -13,11 +15,13 @@ public class Agenda
 {
 	private PersonaDAO persona;	
 	private TipoContactoDAO tipoContacto;
+	private LocalidadDAO localidad;
 	
 	public Agenda(DAOAbstractFactory metodo_persistencia)
 	{
 		this.persona = metodo_persistencia.createPersonaDAO();
 		this.tipoContacto = metodo_persistencia.createTipoContactoDAO();
+		this.localidad = metodo_persistencia.createLocalidadDAO();
 	}
 	
 	//Persona
@@ -37,21 +41,25 @@ public class Agenda
 	}
 	
 	//TipoContacto
-		public void agregarTipoContacto(TipoContactoDTO nuevoTipoContacto)
+	public void agregarTipoContacto(ContactoDTO nuevoTipoContacto)
 	{
 		this.tipoContacto.insert(nuevoTipoContacto);
 	}
 
-	public void borrarTipoContacto(TipoContactoDTO tipoContacto_a_eliminar) 
+	public void borrarTipoContacto(ContactoDTO tipoContacto_a_eliminar) 
 	{
 		this.tipoContacto.delete(tipoContacto_a_eliminar);
 	}
 	
-	public List<TipoContactoDTO> obtenerTipoContacto()
+	public List<ContactoDTO> obtenerTipoContacto()
 	{
 		return this.tipoContacto.readAll();		
 	}
 	
 	
 	//Localidad
+	public List<LocalidadDTO> obtenerLocalidades()
+	{
+		return this.localidad.readAll();
+	}
 }
