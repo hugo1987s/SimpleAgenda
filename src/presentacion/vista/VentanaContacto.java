@@ -21,6 +21,8 @@ import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
 import presentacion.controlador.Controlador;
+import javax.swing.JTextField;
+import javax.swing.JLabel;
 
 public class VentanaContacto extends JFrame {
 	
@@ -35,6 +37,8 @@ public class VentanaContacto extends JFrame {
 	private String[] nombreColumnas = {"ID", "Descripcion"};
 	private Controlador controlador;
 	private JButton btnCerrar;
+	private JTextField textField;
+	private JLabel lblDescripcin;
 
 	public VentanaContacto(Controlador controlador)
 	{
@@ -42,13 +46,13 @@ public class VentanaContacto extends JFrame {
 		this.controlador = controlador;
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 430, 286);
+		setBounds(100, 100, 430, 327);
 		contentPane = new JPanel();
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 434, 262);
+		panel.setBounds(0, 0, 434, 298);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -67,21 +71,30 @@ public class VentanaContacto extends JFrame {
 		spContactos.setViewportView(getTblContactos());
 		
 		btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(10, 206, 89, 23);
+		btnAgregar.setBounds(10, 241, 89, 23);
 		panel.add(btnAgregar);
 		
 		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(109, 206, 89, 23);
+		btnEditar.setBounds(109, 241, 89, 23);
 		panel.add(btnEditar);
 		
 		btnBorrar = new JButton("Borrar");
-		btnBorrar.setBounds(208, 206, 89, 23);
+		btnBorrar.setBounds(208, 241, 89, 23);
 		btnBorrar.addActionListener(this.controlador);
 		panel.add(btnBorrar);
 		
-		btnCerrar = new JButton("Borrar");
-		btnCerrar.setBounds(309, 206, 89, 23);
+		btnCerrar = new JButton("Cerrar");
+		btnCerrar.setBounds(309, 241, 89, 23);
 		panel.add(btnCerrar);
+		
+		textField = new JTextField();
+		textField.setBounds(140, 206, 258, 22);
+		panel.add(textField);
+		textField.setColumns(10);
+		
+		lblDescripcin = new JLabel("Descripci\u00F3n");
+		lblDescripcin.setBounds(20, 209, 127, 16);
+		panel.add(lblDescripcin);
 		
 		this.setVisible(true);
 	}
