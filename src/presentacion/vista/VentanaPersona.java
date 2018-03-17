@@ -64,7 +64,7 @@ public class VentanaPersona extends JFrame
 		
 		btnAgregarPersona = new JButton("Agregar");
 		btnAgregarPersona.addActionListener(this.controlador);
-		btnAgregarPersona.setBounds(243, 350, 89, 23);
+		btnAgregarPersona.setBounds(242, 350, 89, 23);
 		panel.add(btnAgregarPersona);
 		
 		JLabel lblCalle = new JLabel("Calle");
