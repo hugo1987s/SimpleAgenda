@@ -18,6 +18,7 @@ public class VentanaPersona extends JFrame
 	private JTextField txtTelefono;
 	private JComboBox<String> cboLocalidad;
 	private JButton btnAgregarPersona;
+	private JButton btnABMLocalidades;
 	private Controlador controlador;
 
 	public VentanaPersona(Controlador controlador)
@@ -33,7 +34,7 @@ public class VentanaPersona extends JFrame
 		contentPane.setLayout(null);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(10, 11, 307, 164);
+		panel.setBounds(10, 11, 327, 164);
 		contentPane.add(panel);
 		panel.setLayout(null);
 
@@ -62,6 +63,11 @@ public class VentanaPersona extends JFrame
 		cboLocalidad = new JComboBox<String>(new String[] {});
 		cboLocalidad.setBounds(133, 90, 164, 20);
 		panel.add(cboLocalidad);
+
+		btnABMLocalidades = new JButton("+");
+		btnABMLocalidades.addActionListener(this.controlador);
+		btnABMLocalidades.setBounds(297, 90, 20, 20);
+		panel.add(btnABMLocalidades);
 
 		btnAgregarPersona = new JButton("Agregar");
 		btnAgregarPersona.addActionListener(this.controlador);
