@@ -3,7 +3,11 @@ package presentacion.controlador;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import modelo.Agenda;
+import persistencia.conexion.Conexion;
 import presentacion.reportes.ReporteAgenda;
 import presentacion.vista.VentanaPersona;
 import presentacion.vista.Vista;
@@ -24,6 +28,7 @@ public class Controlador implements ActionListener
 			this.vista.getBtnReporte().addActionListener(this);
 			this.agenda = agenda;
 			this.personas_en_tabla = null;
+			this.vista.getBtnCerrar().addActionListener(this);
 		}
 		
 		public void inicializar()
@@ -68,6 +73,19 @@ public class Controlador implements ActionListener
 				ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
 				reporte.mostrar();				
 			}
+			else if(e.getSource() == this.vista.getBtnCerrar())
+			{
+				
+				int confirm = JOptionPane.showOptionDialog(
+			             null, "Estas seguro que quieres salir de la Agenda!?", 
+			             "Confirmación", JOptionPane.YES_NO_OPTION, 
+			             JOptionPane.QUESTION_MESSAGE, null, null, null);
+			        if (confirm == 0) {
+			        	Conexion.getConexion().cerrarConexion();
+			           System.exit(0);
+			        }
+			        
+			}
 			else if(e.getSource() == this.ventanaPersona.getBtnAgregarPersona())
 			{
 				PersonaDTO nuevaPersona = new PersonaDTO(0,this.ventanaPersona.getTxtNombre().getText(), ventanaPersona.getTxtTelefono().getText());
@@ -75,6 +93,9 @@ public class Controlador implements ActionListener
 				this.llenarTabla();
 				this.ventanaPersona.dispose();
 			}
+			
+			
+			
 		}
 
 }

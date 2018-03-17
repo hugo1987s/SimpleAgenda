@@ -22,7 +22,8 @@ public class Vista
 	private JButton btnReporte;
 	private DefaultTableModel modelPersonas;
 	private  String[] nombreColumnas = {"Nombre y apellido","Teléfono"};
-
+	private JButton btnCerrar;
+	
 	public Vista() 
 	{
 		super();
@@ -33,17 +34,17 @@ public class Vista
 	private void initialize() 
 	{
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 530, 301);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 434, 262);
+		panel.setBounds(0, 0, 597, 262);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JScrollPane spPersonas = new JScrollPane();
-		spPersonas.setBounds(10, 11, 414, 182);
+		spPersonas.setBounds(10, 11, 491, 182);
 		panel.add(spPersonas);
 		
 		modelPersonas = new DefaultTableModel(null,nombreColumnas);
@@ -71,6 +72,10 @@ public class Vista
 		btnReporte = new JButton("Reporte");
 		btnReporte.setBounds(307, 228, 89, 23);
 		panel.add(btnReporte);
+		
+		btnCerrar = new JButton("Cerrar");
+		btnCerrar.setBounds(404, 227, 97, 24);
+		panel.add(btnCerrar);
 	}
 	
 	public void show()
@@ -122,4 +127,11 @@ public class Vista
 	{
 		return nombreColumnas;
 	}
+	
+	public JButton getBtnCerrar() 
+	{
+		return btnCerrar;
+	}
+	
+	
 }
