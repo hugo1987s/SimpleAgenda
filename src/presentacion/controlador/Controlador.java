@@ -49,8 +49,6 @@ public class Controlador implements ActionListener, ListSelectionListener
 		this.llenarTabla();
 		this.vista.show();
 	}
-	
-	
 
 	private void llenarTabla()
 	{
@@ -86,7 +84,8 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 	private void llenarTablaContactos()
 	{
-		this.ventanaContacto.getModelContactos().setRowCount(0); // Para vaciar la tabla
+		this.ventanaContacto.getModelContactos().setRowCount(0); // Para vaciar
+																	// la tabla
 		this.ventanaContacto.getModelContactos().setColumnCount(0);
 		this.ventanaContacto.getModelContactos().setColumnIdentifiers(
 				this.ventanaContacto.getNombreColumnas());
@@ -107,7 +106,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			this.ventanaPersona = new VentanaPersona(this);
 			CargarCombos(this.ventanaPersona);
-			
+
 		} else if (e.getSource() == this.vista.getBtnBorrar())
 		{
 			int[] filas_seleccionadas = this.vista.getTablaPersonas()
@@ -136,14 +135,12 @@ public class Controlador implements ActionListener, ListSelectionListener
 					.getText());
 			this.agenda.agregarPersona(nuevaPersona);
 			this.llenarTabla();
-			
-			
-			
-			ContactoDTO contactoSeleccionado = (ContactoDTO)ventanaPersona.getCboContacto().getSelectedItem();
-			LocalidadDTO localidadSeleccionada = (LocalidadDTO)ventanaPersona.getCboLocalidad().getSelectedItem();
-			
-			
-			
+
+			ContactoDTO contactoSeleccionado = (ContactoDTO) ventanaPersona
+					.getCboContacto().getSelectedItem();
+			LocalidadDTO localidadSeleccionada = (LocalidadDTO) ventanaPersona
+					.getCboLocalidad().getSelectedItem();
+
 			this.ventanaPersona.dispose();
 		}
 
@@ -151,8 +148,8 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			this.ventanaLocalidad = new VentanaLocalidad(this);
 			this.llenarTablaLocalidades();
-		}
-		else if (e.getSource() == this.ventanaPersona.getBtnCerrarVentanaPersona())
+		} else if (e.getSource() == this.ventanaPersona
+				.getBtnCerrarVentanaPersona())
 		{
 			this.ventanaPersona.dispose();
 		}
@@ -173,7 +170,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 			}
 
 			this.llenarTablaContactos();
-
+			this.CargarComboContacto(ventanaPersona);
 		}
 
 		else if (e.getSource() == this.ventanaContacto.getBtnCerrarContacto())
@@ -190,7 +187,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 						this.ventanaContacto.getTxtDescripcion().getText());
 				this.agenda.agregarTipoContacto(objContacto);
 				this.llenarTablaContactos();
-				
+				this.CargarComboContacto(ventanaPersona);
 			}
 		} else if (e.getSource() == this.ventanaContacto.getBtnEditarContacto())
 		{
@@ -210,7 +207,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 				this.agenda.editarTipoContacto(objContacto);
 				this.llenarTablaContactos();
-				
+				this.CargarComboContacto(ventanaPersona);
 			}
 		}
 
@@ -227,25 +224,24 @@ public class Controlador implements ActionListener, ListSelectionListener
 	{
 		List<ContactoDTO> oList = agenda.obtenerTipoContacto();
 		ventanaPersona.getCboContacto().removeAllItems();
-		
+
 		for (int i = 0; i < oList.size(); i++)
 		{
 			ventanaPersona.getCboContacto().addItem(oList.get(i));
 		}
 	}
-	
-	@SuppressWarnings({"unchecked" })
+
+	@SuppressWarnings({ "unchecked" })
 	private void CargarComboLocalidades(VentanaPersona ventanaPersona)
 	{
 		List<LocalidadDTO> oList = agenda.obtenerLocalidades();
 		ventanaPersona.getCboLocalidad().removeAllItems();
-		
+
 		for (int i = 0; i < oList.size(); i++)
 		{
 			ventanaPersona.getCboLocalidad().addItem(oList.get(i));
 		}
 	}
-	
 
 	@Override
 	public void valueChanged(ListSelectionEvent e)
@@ -260,7 +256,6 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 			ventanaContacto.getTxtDescripcion().setText(valor);
 		}
-		
 
 	}
 

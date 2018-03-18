@@ -47,7 +47,7 @@ public class VentanaContacto extends JFrame {
 	{
 		super();
 		this.controlador = controlador;
-
+		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 430, 327);
 		contentPane = new JPanel();
