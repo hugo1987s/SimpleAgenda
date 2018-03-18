@@ -109,9 +109,9 @@ public class VentanaPersona extends JFrame
 		panel.add(txtAltura);
 
 		txtCalle = new JTextField();
-		txtCalle.setColumns(10);
-		txtCalle.setBounds(133, 74, 297, 20);
-		panel.add(txtCalle);
+		getTxtCalle().setColumns(10);
+		getTxtCalle().setBounds(133, 74, 297, 20);
+		panel.add(getTxtCalle());
 
 		txtDepartamento = new JTextField();
 		txtDepartamento.setColumns(10);
@@ -198,5 +198,36 @@ public class VentanaPersona extends JFrame
 	{
 		return cboContacto;
 	}
+
+	public JTextField getTxtCalle()
+	{
+		return txtCalle;
+	}
+
+	public JTextField getTxtAltura()
+	{
+		return txtAltura;
+	}
+
+	public JTextField getTxtPiso()
+	{
+		return txtPiso;
+	}
+
+	public JTextField getTxtDepartamento()
+	{
+		return txtDepartamento;
+	}
+
+	public JTextField getTxtEmail()
+	{
+		return txtEmail;
+	}
+
+	public JTextField getTxtFechaNacimiento()
+	{
+		return txtFechaNacimiento;
+	}
+	
 
 }

@@ -46,6 +46,22 @@ public class PersonaDTO
 		this.contacto = new ContactoDTO(IdTipoContacto, Contacto);
 	}
 	
+	public PersonaDTO(int IdPersona, String Nombre, String Telefono, String Calle, int Altura, int Piso, String Departamento, 
+			String Email, Date FechaNacimiento, ContactoDTO Contacto, LocalidadDTO Localidad)
+	{
+		this.idPersona = IdPersona;
+		this.nombre = Nombre;
+		this.telefono = Telefono;
+		this.calle = Calle;
+		this.altura = Altura;
+		this.piso = Piso;
+		this.departamento = Departamento;
+		this.email = Email;
+		this.fechaNacimiento = FechaNacimiento;
+		this.localidad = new LocalidadDTO(Localidad.getCodigoPostal(), Localidad.getNombre());
+		this.contacto = new ContactoDTO(Contacto.getIdTipoContacto(), Contacto.getTipo());
+	}
+	
 	public int getIdPersona() 
 	{
 		return this.idPersona;

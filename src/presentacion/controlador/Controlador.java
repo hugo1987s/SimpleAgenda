@@ -2,7 +2,14 @@ package presentacion.controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.ComboBoxModel;
 import javax.swing.event.ListSelectionEvent;
@@ -143,17 +150,22 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 		} else if (e.getSource() == this.ventanaPersona.getBtnAgregarPersona())
 		{
+			ContactoDTO contacto = (ContactoDTO) ventanaPersona.getCboContacto().getSelectedItem();
+			LocalidadDTO localidad = (LocalidadDTO) ventanaPersona.getCboLocalidad().getSelectedItem();
+						
 			PersonaDTO nuevaPersona = new PersonaDTO(0, this.ventanaPersona
-					.getTxtNombre().getText(), ventanaPersona.getTxtTelefono()
-					.getText());
+					.getTxtNombre().getText(), 
+					ventanaPersona.getTxtTelefono().getText(),
+					ventanaPersona.getTxtCalle().getText(),
+					Integer.parseInt(ventanaPersona.getTxtAltura().getText()),
+					Integer.parseInt(ventanaPersona.getTxtPiso().getText()),
+					ventanaPersona.getTxtDepartamento().getText(),
+					ventanaPersona.getTxtEmail().getText(),
+					obtenerFechaNacimiento(),
+					contacto, localidad);
 			this.agenda.agregarPersona(nuevaPersona);
 			this.llenarTabla();
-
-			ContactoDTO contactoSeleccionado = (ContactoDTO) ventanaPersona
-					.getCboContacto().getSelectedItem();
-			LocalidadDTO localidadSeleccionada = (LocalidadDTO) ventanaPersona
-					.getCboLocalidad().getSelectedItem();
-
+		
 			this.ventanaPersona.dispose();
 		}
 
@@ -224,6 +236,21 @@ public class Controlador implements ActionListener, ListSelectionListener
 			}
 		}
 
+	}
+
+	private Date obtenerFechaNacimiento()
+	{
+		DateFormat format = new SimpleDateFormat("d/M/yyyy", Locale.getDefault());
+		Date fechaNacimiento = new Date();
+		try
+		{
+			fechaNacimiento = format.parse(ventanaPersona.getTxtFechaNacimiento().getText());
+		} catch (ParseException e1)
+		{
+			e1.printStackTrace();
+		}
+		
+		return fechaNacimiento;
 	}
 
 	private void CargarCombos(VentanaPersona ventanaPersona)
