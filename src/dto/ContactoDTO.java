@@ -30,4 +30,10 @@ public class ContactoDTO {
 	{
 		Tipo = tipo;
 	}
+	
+	@Override
+	public String toString()
+	{
+		return this.Tipo;
+	}
 }

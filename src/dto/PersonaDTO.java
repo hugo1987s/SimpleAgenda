@@ -42,4 +42,6 @@ public class PersonaDTO
 	{
 		this.telefono = telefono;
 	}
+	
+	
 }
