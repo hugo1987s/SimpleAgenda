@@ -11,21 +11,25 @@ public class PersonaDTO
 	private int altura;
 	private int piso;
 	private String departamento;
-	private int codigoPostal;
+	//private int codigoPostal;
 	private String email;
 	private Date fechaNacimiento;
-	private int idTipoContacto;
+	//private int idTipoContacto;
+	private LocalidadDTO localidad;
+	private ContactoDTO contacto;
 	
 	public PersonaDTO(int IdPersona, String Nombre, String Telefono)
 	{
 		this.idPersona = IdPersona;
 		this.nombre = Nombre;
 		this.telefono = Telefono;
+		this.localidad = new LocalidadDTO(0, "");
+		this.contacto = new ContactoDTO(0, "");
 	}
 	
 	
 	public PersonaDTO(int IdPersona, String Nombre, String Telefono, String Calle, int Altura, int Piso, String Departamento, 
-			int CodigoPostal, String Email, Date FechaNacimiento, int IdTipoContacto)
+			int CodigoPostal, String Email, Date FechaNacimiento, int IdTipoContacto, String Contacto, String Localidad)
 	{
 		this.idPersona = IdPersona;
 		this.nombre = Nombre;
@@ -34,10 +38,12 @@ public class PersonaDTO
 		this.altura = Altura;
 		this.piso = Piso;
 		this.departamento = Departamento;
-		this.codigoPostal = CodigoPostal;
+		//this.codigoPostal = CodigoPostal;
 		this.email = Email;
 		this.fechaNacimiento = FechaNacimiento;
-		this.idTipoContacto = IdTipoContacto;
+		//this.idTipoContacto = IdTipoContacto;
+		this.localidad = new LocalidadDTO(CodigoPostal, Localidad);
+		this.contacto = new ContactoDTO(IdTipoContacto, Contacto);
 	}
 	
 	public int getIdPersona() 
@@ -69,7 +75,7 @@ public class PersonaDTO
 	{
 		this.telefono = telefono;
 	}
-
+/*
 	public int getIdTipoContacto()
 	{
 		return idTipoContacto;
@@ -79,7 +85,7 @@ public class PersonaDTO
 	{
 		idTipoContacto = _idTipoContacto;
 	}
-
+*/
 	public Date getFechaNacimiento()
 	{
 		return fechaNacimiento;
@@ -99,7 +105,7 @@ public class PersonaDTO
 	{
 		email = _email;
 	}
-
+/*
 	public int getCodigoPostal()
 	{
 		return codigoPostal;
@@ -109,7 +115,7 @@ public class PersonaDTO
 	{
 		codigoPostal = _codigoPostal;
 	}
-
+*/
 	public String getDepartamento()
 	{
 		return departamento;
@@ -148,6 +154,30 @@ public class PersonaDTO
 	public void setCalle(String _calle)
 	{
 		calle = _calle;
+	}
+
+
+	public LocalidadDTO getLocalidad()
+	{
+		return localidad;
+	}
+
+
+	public void setLocalidad(LocalidadDTO localidad)
+	{
+		this.localidad = localidad;
+	}
+
+
+	public ContactoDTO getContacto()
+	{
+		return contacto;
+	}
+
+
+	public void setContacto(ContactoDTO contacto)
+	{
+		this.contacto = contacto;
 	}
 	
 	

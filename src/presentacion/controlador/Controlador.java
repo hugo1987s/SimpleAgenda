@@ -61,7 +61,20 @@ public class Controlador implements ActionListener, ListSelectionListener
 		for (int i = 0; i < this.personas_en_tabla.size(); i++)
 		{
 			Object[] fila = { this.personas_en_tabla.get(i).getNombre(),
-					this.personas_en_tabla.get(i).getTelefono() };
+					this.personas_en_tabla.get(i).getTelefono(), 
+					this.personas_en_tabla.get(i).getCalle(),
+					this.personas_en_tabla.get(i).getAltura(),
+					this.personas_en_tabla.get(i).getPiso(),
+					this.personas_en_tabla.get(i).getDepartamento(),
+					this.personas_en_tabla.get(i).getLocalidad().getCodigoPostal(),
+					this.personas_en_tabla.get(i).getLocalidad().getNombre(),
+					this.personas_en_tabla.get(i).getEmail(),
+					this.personas_en_tabla.get(i).getFechaNacimiento(),
+					this.personas_en_tabla.get(i).getContacto().getTipo()
+			
+			};
+			
+			
 			this.vista.getModelPersonas().addRow(fila);
 		}
 	}
