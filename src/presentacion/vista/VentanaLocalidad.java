@@ -42,21 +42,21 @@ public class VentanaLocalidad extends JFrame
 		panel.setBounds(0, 0, 434, 327);
 		contentPane.add(panel);
 		panel.setLayout(null);
-		
+
 		JScrollPane spLocalidades = new JScrollPane();
 		spLocalidades.setBounds(10, 11, 414, 182);
 		panel.add(spLocalidades);
-		
+
 		modelLocalidades = new DefaultTableModel(null, nombreColumnas);
 		tablaLocalidades = new JTable(modelLocalidades);
-		
+
 		tablaLocalidades.getColumnModel().getColumn(0).setPreferredWidth(103);
 		tablaLocalidades.getColumnModel().getColumn(0).setResizable(false);
 		tablaLocalidades.getColumnModel().getColumn(1).setPreferredWidth(100);
 		tablaLocalidades.getColumnModel().getColumn(1).setResizable(false);
 
 		spLocalidades.setViewportView(tablaLocalidades);
-		
+
 		lblNombreLocalidad = new JLabel("Nombre");
 		lblNombreLocalidad.setBounds(10, 220, 113, 14);
 		panel.add(lblNombreLocalidad);
@@ -65,7 +65,7 @@ public class VentanaLocalidad extends JFrame
 		txtNombreLocalidad.setBounds(133, 217, 164, 20);
 		txtNombreLocalidad.setColumns(10);
 		panel.add(txtNombreLocalidad);
-		
+
 		lblCodigoPostal = new JLabel("Codigo Postal");
 		lblCodigoPostal.setBounds(10, 261, 113, 14);
 		panel.add(lblCodigoPostal);
@@ -74,23 +74,24 @@ public class VentanaLocalidad extends JFrame
 		txtCodigoPostal.setBounds(133, 258, 164, 20);
 		txtCodigoPostal.setColumns(10);
 		panel.add(txtCodigoPostal);
-		
+
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setBounds(10, 293, 89, 23);
 		panel.add(btnAgregar);
-		
+
 		btnEditar = new JButton("Editar");
 		btnEditar.setBounds(109, 293, 89, 23);
 		panel.add(btnEditar);
-		
+
 		btnBorrar = new JButton("Borrar");
 		btnBorrar.setBounds(208, 293, 89, 23);
+		btnBorrar.addActionListener(this.controlador);
 		panel.add(btnBorrar);
-		
+
 		this.setVisible(true);
 	}
-	
-	public DefaultTableModel getModelLocalidades() 
+
+	public DefaultTableModel getModelLocalidades()
 	{
 		return modelLocalidades;
 	}
@@ -98,6 +99,16 @@ public class VentanaLocalidad extends JFrame
 	public String[] getNombreColumnas()
 	{
 		return nombreColumnas;
+	}
+
+	public JButton getBtnBorrar()
+	{
+		return btnBorrar;
+	}
+
+	public JTable getTablaLocalidades()
+	{
+		return tablaLocalidades;
 	}
 
 }

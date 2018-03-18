@@ -39,4 +39,9 @@ public class Agenda
 		return this.localidad.readAll();
 	}
 
+	public void borrarLocalidad(LocalidadDTO localidad_a_eliminar)
+	{
+		this.localidad.delete(localidad_a_eliminar);
+	}
+
 }

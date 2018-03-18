@@ -96,6 +96,15 @@ public class Controlador implements ActionListener
 		{
 			this.ventanaLocalidad = new VentanaLocalidad(this);
 			this.llenarTablaLocalidades();
+		} else if (e.getSource() == this.ventanaLocalidad.getBtnBorrar())
+		{
+			int[] filas_seleccionadas = this.ventanaLocalidad.getTablaLocalidades().getSelectedRows();
+			for (int fila : filas_seleccionadas)
+			{
+				this.agenda.borrarLocalidad(this.localidades_en_tabla.get(fila));
+			}
+
+			this.llenarTablaLocalidades();
 		}
 	}
 
