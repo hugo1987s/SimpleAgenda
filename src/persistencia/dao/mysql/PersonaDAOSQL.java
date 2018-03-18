@@ -1,13 +1,10 @@
 package persistencia.dao.mysql;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.beanutils.converters.SqlDateConverter;
 
 import persistencia.conexion.Conexion;
 import persistencia.dao.interfaz.PersonaDAO;
@@ -19,6 +16,11 @@ public class PersonaDAOSQL implements PersonaDAO
 			+ "CodigoPostal, Email, FechaNacimiento, IdTipoContacto) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM personas WHERE idPersona = ?";
 	private static final String readall = "Select p.IdPersona, p.Nombre, Telefono, Calle, Altura, Piso, Departamento, p.CodigoPostal, Email, FechaNacimiento, p.IdTipoContacto, tp.Tipo, loc.Nombre as NombreLocalidad from personas p inner join localidades loc on p.CodigoPostal = loc.CodigoPostal inner join tipoContacto tp on p.IdTipoContacto = tp.IdTipoContacto";
+	private static final String update = "UPDATE personas "
+			+ " SET Nombre = ?, "
+			+ " Telefono = ?, Calle = ?, Altura = ?, Piso = ?, Departamento = ?, "
+			+ " CodigoPostal = ?, Email = ?, FechaNacimiento = ?, IdTipoContacto = ? "
+			+ " where idPersona = ?";
 
 
 	public boolean insert(PersonaDTO persona)
@@ -105,5 +107,37 @@ public class PersonaDAOSQL implements PersonaDAO
 			e.printStackTrace();
 		}
 		return personas;
+	}
+	
+	@Override
+	public boolean edit(PersonaDTO persona)
+	{
+		PreparedStatement statement;
+		Conexion conexion = Conexion.getConexion();
+		try 
+		{
+			statement = conexion.getSQLConexion().prepareStatement(update);
+			
+			statement.setString(1, persona.getNombre());
+			statement.setString(2, persona.getTelefono());
+			statement.setString(3, persona.getCalle());
+			statement.setInt(4, persona.getAltura());
+			statement.setInt(5, persona.getPiso());
+			statement.setString(6, persona.getDepartamento());
+			statement.setInt(7, persona.getLocalidad().getCodigoPostal());
+			statement.setString(8, persona.getEmail());
+			statement.setDate(9, new java.sql.Date(persona.getFechaNacimiento().getTime()));
+			statement.setInt(10, persona.getContacto().getIdTipoContacto());
+						
+			statement.setInt(11, persona.getIdPersona());
+			
+			if(statement.executeUpdate() > 0) //Si se ejecutó devuelvo true
+				return true;
+		} 
+		catch (SQLException e) 
+		{
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
