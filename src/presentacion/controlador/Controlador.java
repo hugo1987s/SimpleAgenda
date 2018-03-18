@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -195,6 +196,9 @@ public class Controlador implements ActionListener, ListSelectionListener
 		} else if (this.ventanaPersona != null
 				&& e.getSource() == this.ventanaPersona.getBtnAgregarPersona())
 		{
+			// String errores = formPersonaValido();
+			// if (errores == "")
+			// {
 			ContactoDTO contacto = (ContactoDTO) ventanaPersona
 					.getCboContacto().getSelectedItem();
 			LocalidadDTO localidad = (LocalidadDTO) ventanaPersona
@@ -222,6 +226,11 @@ public class Controlador implements ActionListener, ListSelectionListener
 			this.llenarTabla();
 
 			this.ventanaPersona.dispose();
+			/*
+			 * } else { messageBox(errores, "Validación de datos");
+			 * 
+			 * }
+			 */
 		}
 
 		else if (this.ventanaPersona != null
@@ -229,12 +238,11 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			this.ventanaLocalidad = new VentanaLocalidad(this);
 			this.llenarTablaLocalidades();
-			
+
 			this.CargarComboLocalidades(ventanaPersona);
 			this.ventanaLocalidad.getTxtNombre().setText("");
 			this.ventanaLocalidad.getTxtCodigoPostal().setText("");
-		} 
-		else if (e.getSource() == this.ventanaPersona
+		} else if (e.getSource() == this.ventanaPersona
 				.getBtnCerrarVentanaPersona())
 		{
 			this.ventanaPersona.dispose();
@@ -371,6 +379,45 @@ public class Controlador implements ActionListener, ListSelectionListener
 		}
 	}
 
+	private String formPersonaValido()
+	{
+		String retorno = "";
+
+		retorno += validarFormatoFechas(ventanaPersona.getTxtFechaNacimiento()
+				.getText(), "Fecha de Nacimiento");
+
+		return retorno;
+	}
+
+	private String validarFormatoFechas(String valor, String nombreCampo)
+	{
+		String retorno = "";
+
+		if (valor != null && valor.trim() != "")
+		{
+
+			if (valor.matches("\\d{2}/\\d{2}/\\d{4}"))
+			{
+				SimpleDateFormat patron = new SimpleDateFormat("dd/MM/yyyy");
+				try
+				{
+					Date fecha = patron.parse(valor);
+
+				} catch (ParseException e)
+				{
+					retorno += "El campo " + nombreCampo
+							+ " no es una fecha válida\n";
+				}
+			} else
+				retorno += "El campo "
+						+ nombreCampo
+						+ " tiene un formato incorrecto. Debe ser [mm/dd/aaaa]\n";
+		} else
+			retorno += "El campo " + nombreCampo + " no puede ser nulo\n";
+
+		return retorno;
+	}
+
 	private String formatearFecha(Date fecha)
 	{
 		DateFormat format = new SimpleDateFormat("d/M/yyyy",
@@ -466,5 +513,11 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 			}
 		}
+	}
+
+	public void messageBox(String infoMessage, String titleBar)
+	{
+		JOptionPane.showMessageDialog(null, infoMessage, titleBar,
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 }
