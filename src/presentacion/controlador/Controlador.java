@@ -96,7 +96,7 @@ public class Controlador implements ActionListener
 		{
 			this.ventanaLocalidad = new VentanaLocalidad(this);
 			this.llenarTablaLocalidades();
-		} else if (e.getSource() == this.ventanaLocalidad.getBtnBorrar())
+		} else if (e.getSource() == this.ventanaLocalidad.getBtnBorrarLocalidad())
 		{
 			int[] filas_seleccionadas = this.ventanaLocalidad.getTablaLocalidades().getSelectedRows();
 			for (int fila : filas_seleccionadas)
@@ -105,6 +105,18 @@ public class Controlador implements ActionListener
 			}
 
 			this.llenarTablaLocalidades();
+		} else if (e.getSource() == this.ventanaLocalidad.getBtnAgregarLocalidad())
+		{
+			// TODO Revisar el tipo de dato de Codigo Postal. String o Int???
+			LocalidadDTO nuevaLocalidad = new LocalidadDTO(
+					Integer.parseInt(this.ventanaLocalidad.getTxtCodigoPostal().getText()),
+					this.ventanaLocalidad.getTxtNombre().getText());
+			this.agenda.agregarLocalidad(nuevaLocalidad);
+
+			this.llenarTablaLocalidades();
+
+			this.ventanaLocalidad.getTxtNombre().setText("");
+			this.ventanaLocalidad.getTxtCodigoPostal().setText("");
 		}
 	}
 

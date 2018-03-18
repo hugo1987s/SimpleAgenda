@@ -77,6 +77,7 @@ public class VentanaLocalidad extends JFrame
 
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setBounds(10, 293, 89, 23);
+		btnAgregar.addActionListener(this.controlador);
 		panel.add(btnAgregar);
 
 		btnEditar = new JButton("Editar");
@@ -91,19 +92,29 @@ public class VentanaLocalidad extends JFrame
 		this.setVisible(true);
 	}
 
+	public JTextField getTxtNombre()
+	{
+		return txtNombreLocalidad;
+	}
+
+	public JTextField getTxtCodigoPostal()
+	{
+		return txtCodigoPostal;
+	}
+
+	public JButton getBtnAgregarLocalidad()
+	{
+		return btnAgregar;
+	}
+
+	public JButton getBtnBorrarLocalidad()
+	{
+		return btnBorrar;
+	}
+
 	public DefaultTableModel getModelLocalidades()
 	{
 		return modelLocalidades;
-	}
-
-	public String[] getNombreColumnas()
-	{
-		return nombreColumnas;
-	}
-
-	public JButton getBtnBorrar()
-	{
-		return btnBorrar;
 	}
 
 	public JTable getTablaLocalidades()
@@ -111,4 +122,8 @@ public class VentanaLocalidad extends JFrame
 		return tablaLocalidades;
 	}
 
+	public String[] getNombreColumnas()
+	{
+		return nombreColumnas;
+	}
 }

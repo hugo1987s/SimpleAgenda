@@ -34,9 +34,9 @@ public class Agenda
 		return this.persona.readAll();
 	}
 
-	public List<LocalidadDTO> obtenerLocalidades()
+	public void agregarLocalidad(LocalidadDTO nuevaLocalidad)
 	{
-		return this.localidad.readAll();
+		this.localidad.insert(nuevaLocalidad);
 	}
 
 	public void borrarLocalidad(LocalidadDTO localidad_a_eliminar)
@@ -44,4 +44,8 @@ public class Agenda
 		this.localidad.delete(localidad_a_eliminar);
 	}
 
+	public List<LocalidadDTO> obtenerLocalidades()
+	{
+		return this.localidad.readAll();
+	}
 }
