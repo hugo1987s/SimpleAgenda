@@ -20,7 +20,7 @@ public class VentanaLocalidad extends JFrame
 	private JButton btnEditar;
 	private JButton btnBorrar;
 	private DefaultTableModel modelLocalidades;
-	private String[] nombreColumnas = {"Nombre", "Codigo Postal"};
+	private String[] nombreColumnas = { "Nombre", "Codigo Postal" };
 	private Controlador controlador;
 	private JTextField txtNombreLocalidad;
 	private JLabel lblNombreLocalidad;

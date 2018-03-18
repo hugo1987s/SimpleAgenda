@@ -21,8 +21,10 @@ public class Vista
 	private JButton btnBorrar;
 	private JButton btnReporte;
 	private DefaultTableModel modelPersonas;
-	private  String[] nombreColumnas = {"Nombre y apellido","Teléfono"};
-
+	private  String[] nombreColumnas = {"Nombre y apellido","Teléfono", "Calle", "Altura", 
+			"Piso", "Departamento", "CP", "Localidad", "Email", "Fecha Cump", "Tipo Contacto"};
+	private JButton btnCerrar;
+	
 	public Vista() 
 	{
 		super();
@@ -33,44 +35,53 @@ public class Vista
 	private void initialize() 
 	{
 		frame = new JFrame();
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 947, 308);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 434, 262);
+		panel.setBounds(0, 0, 956, 269);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JScrollPane spPersonas = new JScrollPane();
-		spPersonas.setBounds(10, 11, 414, 182);
+		spPersonas.setBounds(10, 11, 906, 204);
 		panel.add(spPersonas);
 		
 		modelPersonas = new DefaultTableModel(null,nombreColumnas);
 		tablaPersonas = new JTable(modelPersonas);
 		
-		tablaPersonas.getColumnModel().getColumn(0).setPreferredWidth(103);
+		tablaPersonas.getColumnModel().getColumn(0).setPreferredWidth(150);
 		tablaPersonas.getColumnModel().getColumn(0).setResizable(false);
 		tablaPersonas.getColumnModel().getColumn(1).setPreferredWidth(100);
 		tablaPersonas.getColumnModel().getColumn(1).setResizable(false);
+
 		
+		
+		tablaPersonas.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		spPersonas.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 		spPersonas.setViewportView(tablaPersonas);
 		
+		
 		btnAgregar = new JButton("Agregar");
-		btnAgregar.setBounds(10, 228, 89, 23);
+		btnAgregar.setBounds(425, 229, 89, 23);
 		panel.add(btnAgregar);
 		
 		JButton btnEditar = new JButton("Editar");
-		btnEditar.setBounds(109, 228, 89, 23);
+		btnEditar.setBounds(524, 229, 89, 23);
 		panel.add(btnEditar);
 		
 		btnBorrar = new JButton("Borrar");
-		btnBorrar.setBounds(208, 228, 89, 23);
+		btnBorrar.setBounds(623, 229, 89, 23);
 		panel.add(btnBorrar);
 		
 		btnReporte = new JButton("Reporte");
-		btnReporte.setBounds(307, 228, 89, 23);
+		btnReporte.setBounds(722, 229, 89, 23);
 		panel.add(btnReporte);
+		
+		btnCerrar = new JButton("Cerrar");
+		btnCerrar.setBounds(819, 228, 97, 24);
+		panel.add(btnCerrar);
 	}
 	
 	public void show()
@@ -122,4 +133,11 @@ public class Vista
 	{
 		return nombreColumnas;
 	}
+	
+	public JButton getBtnCerrar() 
+	{
+		return btnCerrar;
+	}
+	
+	
 }
