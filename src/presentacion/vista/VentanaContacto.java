@@ -10,6 +10,8 @@ import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import java.awt.Color;
 import java.awt.event.WindowAdapter;
@@ -21,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
 
 import persistencia.conexion.Conexion;
 import presentacion.controlador.Controlador;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 
@@ -37,8 +40,8 @@ public class VentanaContacto extends JFrame {
 	private String[] nombreColumnas = {"ID", "Descripcion"};
 	private Controlador controlador;
 	private JButton btnCerrar;
-	private JTextField textField;
-	private JLabel lblDescripcin;
+	private JTextField txtDescripcion;
+	private JLabel lblDescripcion;
 
 	public VentanaContacto(Controlador controlador)
 	{
@@ -63,6 +66,7 @@ public class VentanaContacto extends JFrame {
 		modelContactos = new DefaultTableModel(null, nombreColumnas);
 		this.tblContactos = new JTable(modelContactos);
 		
+		
 		getTblContactos().getColumnModel().getColumn(0).setPreferredWidth(103);
 		getTblContactos().getColumnModel().getColumn(0).setResizable(false);
 		getTblContactos().getColumnModel().getColumn(1).setPreferredWidth(100);
@@ -72,10 +76,12 @@ public class VentanaContacto extends JFrame {
 		
 		btnAgregar = new JButton("Agregar");
 		btnAgregar.setBounds(10, 241, 89, 23);
+		btnAgregar.addActionListener(this.controlador);
 		panel.add(btnAgregar);
 		
 		btnEditar = new JButton("Editar");
 		btnEditar.setBounds(109, 241, 89, 23);
+		btnEditar.addActionListener(this.controlador);
 		panel.add(btnEditar);
 		
 		btnBorrar = new JButton("Borrar");
@@ -85,16 +91,20 @@ public class VentanaContacto extends JFrame {
 		
 		btnCerrar = new JButton("Cerrar");
 		btnCerrar.setBounds(309, 241, 89, 23);
+		btnCerrar.addActionListener(this.controlador);
 		panel.add(btnCerrar);
 		
-		textField = new JTextField();
-		textField.setBounds(140, 206, 258, 22);
-		panel.add(textField);
-		textField.setColumns(10);
+		txtDescripcion = new JTextField();
+		txtDescripcion.setBounds(140, 206, 258, 22);
+		panel.add(txtDescripcion);
+		txtDescripcion.setColumns(10);
 		
-		lblDescripcin = new JLabel("Descripci\u00F3n");
-		lblDescripcin.setBounds(20, 209, 127, 16);
-		panel.add(lblDescripcin);
+		lblDescripcion = new JLabel("Descripci\u00F3n");
+		lblDescripcion.setBounds(20, 212, 89, 16);
+		panel.add(lblDescripcion);
+		
+		
+		this.tblContactos.getSelectionModel().addListSelectionListener(this.controlador);
 		
 		this.setVisible(true);
 	}
@@ -119,6 +129,23 @@ public class VentanaContacto extends JFrame {
 		return tblContactos;
 	}
 
+	public JTextField getTxtDescripcion()
+	{
+		return txtDescripcion;
+	}
 	
+	public JButton getBtnCerrarContacto()
+	{
+		return btnCerrar;
+	}
 	
+	public JButton getBtnAgregarContacto()
+	{
+		return btnAgregar;
+	}
+	
+	public JButton getBtnEditarContacto()
+	{
+		return btnEditar;
+	}
 }

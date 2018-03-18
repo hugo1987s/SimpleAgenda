@@ -28,6 +28,7 @@ public class VentanaPersona extends JFrame
 	private JTextField txtEmail;
 	private JButton btnABMContactos;
 	private JButton btnABMLocalidades;
+	private JButton btnCerrar;
 	
 	public VentanaPersona(Controlador controlador) 
 	{
@@ -140,8 +141,9 @@ public class VentanaPersona extends JFrame
 		cboContacto.setBounds(133, 303, 246, 22);
 		panel.add(cboContacto);
 		
-		JButton btnCerrar = new JButton("Cerrar");
+		btnCerrar = new JButton("Cerrar");
 		btnCerrar.setBounds(341, 350, 89, 23);
+		btnCerrar.addActionListener(this.controlador);
 		panel.add(btnCerrar);
 		
 		btnABMContactos = new JButton("...");
@@ -182,5 +184,9 @@ public class VentanaPersona extends JFrame
 		return btnABMLocalidades;
 	}
 	
+	public JButton getBtnCerrarVentanaPersona()
+	{
+		return btnCerrar;
+	}
 }
 

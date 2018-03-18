@@ -56,6 +56,10 @@ public class Agenda
 		return this.tipoContacto.readAll();		
 	}
 	
+	public void editarTipoContacto(ContactoDTO tipoContacto_a_editar) 
+	{
+		this.tipoContacto.edit(tipoContacto_a_editar);
+	}
 	
 	//Localidad
 	public List<LocalidadDTO> obtenerLocalidades()
