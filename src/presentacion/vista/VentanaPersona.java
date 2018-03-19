@@ -106,6 +106,7 @@ public class VentanaPersona extends JFrame
 		panel.add(lblTipoDeContacto);
 
 		txtAltura = new JTextField();
+		txtAltura.setText("0");
 		txtAltura.setColumns(10);
 		txtAltura.setBounds(135, 142, 67, 20);
 		panel.add(txtAltura);
@@ -121,6 +122,7 @@ public class VentanaPersona extends JFrame
 		panel.add(txtDepartamento);
 
 		txtPiso = new JTextField();
+		txtPiso.setText("0");
 		txtPiso.setColumns(10);
 		txtPiso.setBounds(135, 174, 67, 20);
 		panel.add(txtPiso);
