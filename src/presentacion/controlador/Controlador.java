@@ -286,52 +286,72 @@ public class Controlador implements ActionListener, ListSelectionListener
 				&& e.getSource() == this.ventanaContacto
 						.getBtnAgregarContacto())
 		{
-			if (this.ventanaContacto.getTxtDescripcion().getText().trim() != "")
+			String errores = formContactoValido();
+			if (errores.isEmpty())
 			{
+
 				ContactoDTO objContacto = new ContactoDTO(0,
 						this.ventanaContacto.getTxtDescripcion().getText());
 				this.agenda.agregarTipoContacto(objContacto);
 				this.llenarTablaContactos();
 				this.CargarComboContacto(ventanaPersona);
+				this.ventanaContacto.getTxtDescripcion().setText("");
+
+			} else
+			{
+				messageBox(errores, "Validación de datos");
 			}
+
 		} else if (this.ventanaContacto != null
 				&& e.getSource() == this.ventanaContacto.getBtnEditarContacto())
 		{
-
-			int idContacto = Integer.parseInt(this.ventanaContacto
-					.getTblContactos()
-					.getValueAt(
-							this.ventanaContacto.getTblContactos()
-									.getSelectedRow(), 0).toString());
-
-			String valor = this.ventanaContacto.getTxtDescripcion().getText();
-
-			if (valor.trim() != "")
+			String errores = formContactoValido();
+			if (errores.isEmpty())
 			{
+				int idContacto = Integer.parseInt(this.ventanaContacto
+						.getTblContactos()
+						.getValueAt(
+								this.ventanaContacto.getTblContactos()
+										.getSelectedRow(), 0).toString());
+
+				String valor = this.ventanaContacto.getTxtDescripcion()
+						.getText();
+
 				ContactoDTO objContacto = new ContactoDTO(idContacto,
 						valor.trim());
 
 				this.agenda.editarTipoContacto(objContacto);
 				this.llenarTablaContactos();
 				this.CargarComboContacto(ventanaPersona);
+				this.ventanaContacto.getTxtDescripcion().setText("");
+			} else
+			{
+				messageBox(errores, "Validación de datos");
 			}
 
-			this.llenarTablaLocalidades();
 		} else if (this.ventanaLocalidad != null
 				&& e.getSource() == this.ventanaLocalidad
 						.getBtnAgregarLocalidad())
 		{
 
-			LocalidadDTO nuevaLocalidad = new LocalidadDTO(
-					Integer.parseInt(this.ventanaLocalidad.getTxtCodigoPostal()
-							.getText()), this.ventanaLocalidad.getTxtNombre()
-							.getText());
-			this.agenda.agregarLocalidad(nuevaLocalidad);
+			String errores = formLocalidadValido();
+			if (errores.isEmpty())
+			{
+				LocalidadDTO nuevaLocalidad = new LocalidadDTO(
+						Integer.parseInt(this.ventanaLocalidad
+								.getTxtCodigoPostal().getText()),
+						this.ventanaLocalidad.getTxtNombre().getText());
+				this.agenda.agregarLocalidad(nuevaLocalidad);
 
-			this.llenarTablaLocalidades();
-			this.CargarComboLocalidades(ventanaPersona);
-			this.ventanaLocalidad.getTxtNombre().setText("");
-			this.ventanaLocalidad.getTxtCodigoPostal().setText("");
+				this.llenarTablaLocalidades();
+				this.CargarComboLocalidades(ventanaPersona);
+				this.ventanaLocalidad.getTxtNombre().setText("");
+				this.ventanaLocalidad.getTxtCodigoPostal().setText("");
+
+			} else
+			{
+				messageBox(errores, "Validación de datos");
+			}
 		}
 
 		else if (this.ventanaLocalidad != null
@@ -360,24 +380,32 @@ public class Controlador implements ActionListener, ListSelectionListener
 				&& e.getSource() == this.ventanaLocalidad
 						.getBtnEditarLocalidad())
 		{
-			int codigoPostal = Integer.parseInt(this.ventanaLocalidad
-					.getTablaLocalidades()
-					.getValueAt(
-							this.ventanaLocalidad.getTablaLocalidades()
-									.getSelectedRow(), 0).toString());
-
-			String valor = this.ventanaLocalidad.getTxtNombre().getText();
-
-			if (valor.trim() != "")
+			String errores = formLocalidadValido();
+			if (errores.isEmpty())
 			{
-				LocalidadDTO objLocalidad = new LocalidadDTO(codigoPostal,
-						valor.trim());
+				int codigoPostal = Integer.parseInt(this.ventanaLocalidad
+						.getTablaLocalidades()
+						.getValueAt(
+								this.ventanaLocalidad.getTablaLocalidades()
+										.getSelectedRow(), 0).toString());
 
-				this.agenda.editarLocalidad(objLocalidad);
-				this.llenarTablaLocalidades();
-				this.CargarComboLocalidades(ventanaPersona);
-				this.ventanaLocalidad.getTxtNombre().setText("");
-				this.ventanaLocalidad.getTxtCodigoPostal().setText("");
+				String valor = this.ventanaLocalidad.getTxtNombre().getText();
+
+				if (valor.trim() != "")
+				{
+					LocalidadDTO objLocalidad = new LocalidadDTO(codigoPostal,
+							valor.trim());
+
+					this.agenda.editarLocalidad(objLocalidad);
+					this.llenarTablaLocalidades();
+					this.CargarComboLocalidades(ventanaPersona);
+					this.ventanaLocalidad.getTxtNombre().setText("");
+					this.ventanaLocalidad.getTxtCodigoPostal().setText("");
+				}
+
+			} else
+			{
+				messageBox(errores, "Validación de datos");
 			}
 
 		}
@@ -387,18 +415,45 @@ public class Controlador implements ActionListener, ListSelectionListener
 	{
 		String retorno = "";
 
-		retorno += validaString(ventanaPersona.getTxtNombre().getText(), "Nombre y apellido");
-		retorno += validaTelefono(ventanaPersona.getTxtTelefono().getText(), "Teléfono");
+		retorno += validaString(ventanaPersona.getTxtNombre().getText(),
+				"Nombre y apellido");
+		retorno += validaTelefono(ventanaPersona.getTxtTelefono().getText(),
+				"Teléfono");
 		retorno += validaString(ventanaPersona.getTxtCalle().getText(), "Calle");
-		retorno += validaNumero(ventanaPersona.getTxtAltura().getText(), "Altura");
+		retorno += validaNumero(ventanaPersona.getTxtAltura().getText(),
+				"Altura");
 		retorno += validaNumero(ventanaPersona.getTxtPiso().getText(), "Piso");
-		retorno += validaString(ventanaPersona.getTxtDepartamento().getText(), "Departamento");
+		retorno += validaString(ventanaPersona.getTxtDepartamento().getText(),
+				"Departamento");
 
 		retorno += validarEmail(ventanaPersona.getTxtEmail().getText());
 
 		retorno += validarFormatoFechas(ventanaPersona.getTxtFechaNacimiento()
 				.getText(), "Fecha de Cumpleaños");
-		
+
+		return retorno;
+	}
+
+	private String formContactoValido()
+	{
+		String retorno = "";
+
+		retorno += validaString(ventanaContacto.getTxtDescripcion().getText(),
+				"Descripcion");
+
+		return retorno;
+	}
+
+	private String formLocalidadValido()
+	{
+		String retorno = "";
+
+		retorno += validaNumero(
+				ventanaLocalidad.getTxtCodigoPostal().getText(),
+				"Codigo Postal");
+		retorno += validaString(ventanaLocalidad.getTxtNombre().getText(),
+				"Nombre de Localidad");
+
 		return retorno;
 	}
 
@@ -408,18 +463,19 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 		if (valor != null && !valor.trim().isEmpty())
 		{
-				try
-				{
-					int dato = Integer.parseInt(valor);
+			try
+			{
+				int dato = Integer.parseInt(valor);
 
-				} catch (NumberFormatException e)
-				{
-					retorno += "El campo " + nombreCampo
-							+ " no es un número válido.\n";
-				}
-			
+			} catch (NumberFormatException e)
+			{
+				retorno += "El campo " + nombreCampo
+						+ " no es un número válido.\n";
+			}
+
 		} else
-			retorno += "El campo " + nombreCampo + " no puede ser nulo. Coloque 0 como valor por defecto\n";
+			retorno += "El campo " + nombreCampo
+					+ " no puede ser nulo. Coloque 0 como valor por defecto\n";
 
 		return retorno;
 	}
@@ -433,12 +489,12 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			if (!valor.matches(patron))
 			{
-				retorno = "El campo " + nombreCampo + " no tiene el formato correcto: (11)1234-5678\n";
+				retorno = "El campo " + nombreCampo
+						+ " no tiene el formato correcto: (11)1234-5678\n";
 			}
-		}
-		else
+		} else
 			retorno = "El campo " + nombreCampo + " no puede ser nulo.\n";
-		
+
 		return retorno;
 	}
 
@@ -446,10 +502,10 @@ public class Controlador implements ActionListener, ListSelectionListener
 	{
 		if (valor == null || valor.trim().isEmpty())
 			return "El campo " + nombreCampo + " no puede ser nulo.\n";
-		
+
 		return "";
 	}
-	
+
 	private String validarEmail(String email)
 	{
 		String patron = "(?:(?:\\r\\n)?[ \\t])*(?:(?:(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*)|(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)*:(?:(?:\\r\\n)?[ \\t])*(?:(?:(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*)(?:,\\s*(?:(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*|(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)*\\<(?:(?:\\r\\n)?[ \\t])*(?:@(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*(?:,@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*)*:(?:(?:\\r\\n)?[ \\t])*)?(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\"(?:[^\\\"\\r\\\\]|\\\\.|(?:(?:\\r\\n)?[ \\t]))*\"(?:(?:\\r\\n)?[ \\t])*))*@(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*)(?:\\.(?:(?:\\r\\n)?[ \\t])*(?:[^()<>@,;:\\\\\".\\[\\] \\000-\\031]+(?:(?:(?:\\r\\n)?[ \\t])+|\\Z|(?=[\\[\"()<>@,;:\\\\\".\\[\\]]))|\\[([^\\[\\]\\r\\\\]|\\\\.)*\\](?:(?:\\r\\n)?[ \\t])*))*\\>(?:(?:\\r\\n)?[ \\t])*))*)?;\\s*)";
@@ -461,10 +517,9 @@ public class Controlador implements ActionListener, ListSelectionListener
 			{
 				retorno = "El Email ingresado no tiene el formato correcto.\n";
 			}
-		}
-		else
+		} else
 			retorno = "El campo Email no puede ser nulo.\n";
-		
+
 		return retorno;
 	}
 
