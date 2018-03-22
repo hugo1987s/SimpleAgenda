@@ -23,31 +23,28 @@
 	<group name="Group1">
 		<groupExpression><![CDATA[$F{fechaNacimiento}.toString().lastIndexOf( "/" )]]></groupExpression>
 		<groupHeader>
-			<band height="46">
+			<band height="24">
 				<staticText>
-					<reportElement x="0" y="0" width="108" height="16" uuid="6f63c4ae-ad08-4679-9d92-4369801073ce"/>
+					<reportElement key="" positionType="FixRelativeToBottom" x="0" y="0" width="108" height="16" uuid="6f63c4ae-ad08-4679-9d92-4369801073ce"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
 					<text><![CDATA[Apellido]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="110" y="0" width="100" height="16" uuid="c8457ee0-81d0-4dd0-833c-7664a138b435"/>
+					<reportElement key="" positionType="FixRelativeToBottom" x="110" y="0" width="100" height="16" uuid="c8457ee0-81d0-4dd0-833c-7664a138b435"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
 					<text><![CDATA[Nombre]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="227" y="0" width="100" height="16" uuid="5174c80b-550c-4c79-b27b-9772f8755324"/>
+					<reportElement key="" positionType="FixRelativeToBottom" x="227" y="0" width="100" height="16" uuid="5174c80b-550c-4c79-b27b-9772f8755324"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
 					<text><![CDATA[Fecha de Nacimiento]]></text>
 				</staticText>
-				<textField>
-					<reportElement x="0" y="20" width="100" height="20" uuid="3ca90d6e-65ec-4875-a3a4-e175e9f10148"/>
-					<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="110" y="20" width="100" height="20" uuid="c915b5d4-baf4-41be-a444-385a2afd1e12"/>
-					<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement x="227" y="20" width="100" height="20" uuid="bc557c29-19fc-4137-8e1d-635d866e07af"/>
-					<textFieldExpression><![CDATA[$F{fechaNacimiento}]]></textFieldExpression>
-				</textField>
 			</band>
 		</groupHeader>
 	</group>
@@ -71,6 +68,22 @@
 			</staticText>
 		</band>
 	</title>
+	<detail>
+		<band height="20">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="3ca90d6e-65ec-4875-a3a4-e175e9f10148"/>
+				<textFieldExpression><![CDATA[$F{apellido}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="0" width="100" height="20" uuid="c915b5d4-baf4-41be-a444-385a2afd1e12"/>
+				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="227" y="0" width="100" height="20" uuid="bc557c29-19fc-4137-8e1d-635d866e07af"/>
+				<textFieldExpression><![CDATA[$F{fechaNacimiento}.getYear()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
 	<pageFooter>
 		<band height="73" splitType="Stretch">
 			<textField>
