@@ -50,9 +50,9 @@ public class Agenda
 		this.tipoContacto.insert(nuevoTipoContacto);
 	}
 
-	public void borrarTipoContacto(ContactoDTO tipoContacto_a_eliminar)
+	public boolean borrarTipoContacto(ContactoDTO tipoContacto_a_eliminar)
 	{
-		this.tipoContacto.delete(tipoContacto_a_eliminar);
+		return this.tipoContacto.delete(tipoContacto_a_eliminar);
 	}
 
 	public List<ContactoDTO> obtenerTipoContacto()
@@ -71,9 +71,9 @@ public class Agenda
 		this.localidad.insert(nuevaLocalidad);
 	}
 
-	public void borrarLocalidad(LocalidadDTO localidad_a_eliminar)
+	public boolean borrarLocalidad(LocalidadDTO localidad_a_eliminar)
 	{
-		this.localidad.delete(localidad_a_eliminar);
+		return this.localidad.delete(localidad_a_eliminar);
 	}
 
 	public List<LocalidadDTO> obtenerLocalidades()

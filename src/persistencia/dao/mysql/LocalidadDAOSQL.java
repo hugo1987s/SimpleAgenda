@@ -49,8 +49,10 @@ public class LocalidadDAOSQL implements LocalidadDAO
 				return true;
 		} catch (SQLException e)
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
+			return false;
 		}
+		
 		return false;
 	}
 

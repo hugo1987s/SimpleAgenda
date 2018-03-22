@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS `agenda`;
 CREATE DATABASE `agenda`;
 USE `agenda`;
 
@@ -23,6 +24,7 @@ CREATE TABLE `personas`
 (
   IdPersona int(11) NOT NULL AUTO_INCREMENT,
   Nombre varchar(45) NOT NULL,
+  Apellido varchar(45) NOT NULL,
   Telefono varchar(20) NOT NULL,
   Calle varchar(50),
   Altura int,

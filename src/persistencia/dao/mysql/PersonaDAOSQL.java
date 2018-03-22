@@ -13,13 +13,14 @@ import dto.PersonaDTO;
 public class PersonaDAOSQL implements PersonaDAO
 {
 	private static final String insert = "INSERT INTO personas(idPersona, Nombre, Telefono, Calle, Altura, Piso, Departamento, "
-			+ "CodigoPostal, Email, FechaNacimiento, IdTipoContacto) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+			+ "CodigoPostal, Email, FechaNacimiento, IdTipoContacto, Apellido) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	private static final String delete = "DELETE FROM personas WHERE idPersona = ?";
-	private static final String readall = "Select p.IdPersona, p.Nombre, Telefono, Calle, Altura, Piso, Departamento, p.CodigoPostal, Email, FechaNacimiento, p.IdTipoContacto, tp.Tipo, loc.Nombre as NombreLocalidad from personas p inner join localidades loc on p.CodigoPostal = loc.CodigoPostal inner join tipoContacto tp on p.IdTipoContacto = tp.IdTipoContacto";
+	private static final String readall = "Select p.IdPersona, p.Nombre, p.Apellido, Telefono, Calle, Altura, Piso, Departamento, p.CodigoPostal, Email, FechaNacimiento, p.IdTipoContacto, tp.Tipo, loc.Nombre as NombreLocalidad from personas p inner join localidades loc on p.CodigoPostal = loc.CodigoPostal inner join tipoContacto tp on p.IdTipoContacto = tp.IdTipoContacto order by FechaNacimiento asc, Apellido asc";
 	private static final String update = "UPDATE personas "
 			+ " SET Nombre = ?, "
 			+ " Telefono = ?, Calle = ?, Altura = ?, Piso = ?, Departamento = ?, "
-			+ " CodigoPostal = ?, Email = ?, FechaNacimiento = ?, IdTipoContacto = ? "
+			+ " CodigoPostal = ?, Email = ?, FechaNacimiento = ?, IdTipoContacto = ?, "
+			+ " Apellido = ? "
 			+ " where idPersona = ?";
 
 
@@ -41,7 +42,8 @@ public class PersonaDAOSQL implements PersonaDAO
 			statement.setString(9, persona.getEmail());
 			statement.setDate(10, new java.sql.Date(persona.getFechaNacimiento().getTime()));
 			statement.setInt(11, persona.getContacto().getIdTipoContacto());
-						
+			statement.setString(12, persona.getApellido());
+			
 			if(statement.executeUpdate() > 0) //Si se ejecutó devuelvo true
 				return true;
 		} 
@@ -98,7 +100,9 @@ public class PersonaDAOSQL implements PersonaDAO
 						resultSet.getDate("FechaNacimiento"),
 						resultSet.getInt("IdTipoContacto"),
 						resultSet.getString("Tipo"),
-						resultSet.getString("NombreLocalidad")
+						resultSet.getString("NombreLocalidad"),
+						resultSet.getString("Apellido")
+						
 				));
 			}
 		} 
@@ -128,8 +132,8 @@ public class PersonaDAOSQL implements PersonaDAO
 			statement.setString(8, persona.getEmail());
 			statement.setDate(9, new java.sql.Date(persona.getFechaNacimiento().getTime()));
 			statement.setInt(10, persona.getContacto().getIdTipoContacto());
-						
-			statement.setInt(11, persona.getIdPersona());
+			statement.setString(11, persona.getApellido());
+			statement.setInt(12, persona.getIdPersona());
 			
 			if(statement.executeUpdate() > 0) //Si se ejecutó devuelvo true
 				return true;

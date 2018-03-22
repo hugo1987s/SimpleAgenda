@@ -6,8 +6,10 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -47,6 +49,9 @@ public class Controlador implements ActionListener, ListSelectionListener
 		this.personas_en_tabla = null;
 		this.vista.getBtnCerrar().addActionListener(this);
 		this.vista.getBtnEditar().addActionListener(this);
+		this.vista.getBtnContactoVista().addActionListener(this);
+		this.vista.getBtnLocalidadVista().addActionListener(this);
+		this.vista.getBtnReporteXFechaVista().addActionListener(this);
 
 	}
 
@@ -69,6 +74,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 			Object[] fila = {
 					this.personas_en_tabla.get(i).getIdPersona(),
 					this.personas_en_tabla.get(i).getNombre(),
+					this.personas_en_tabla.get(i).getApellido(),
 					this.personas_en_tabla.get(i).getTelefono(),
 					this.personas_en_tabla.get(i).getCalle(),
 					this.personas_en_tabla.get(i).getAltura(),
@@ -160,6 +166,8 @@ public class Controlador implements ActionListener, ListSelectionListener
 						String.valueOf(oPersona.getIdPersona()));
 				this.ventanaPersona.getTxtNombre()
 						.setText(oPersona.getNombre());
+				this.ventanaPersona.getTxtApellido().setText(
+						oPersona.getApellido());
 				this.ventanaPersona.getTxtTelefono().setText(
 						oPersona.getTelefono());
 				this.ventanaPersona.getTxtCalle().setText(oPersona.getCalle());
@@ -185,9 +193,27 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 		else if (e.getSource() == this.vista.getBtnReporte())
 		{
-			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
+			Map<String, Object> parametersMap = new HashMap<String, Object>();
+			parametersMap.put("Fecha",
+					new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+
+			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas(),
+					"ReporteAgenda", parametersMap);
 			reporte.mostrar();
-		} else if (e.getSource() == this.vista.getBtnCerrar())
+		}
+
+		else if (e.getSource() == this.vista.getBtnReporteXFechaVista())
+		{
+			Map<String, Object> parametersMap = new HashMap<String, Object>();
+			parametersMap.put("Fecha",
+					new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+
+			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas(),
+					"rptContactosPorFechaNac", parametersMap);
+			reporte.mostrar();
+		}
+
+		else if (e.getSource() == this.vista.getBtnCerrar())
 		{
 
 			Conexion.getConexion().cerrarConexion();
@@ -213,7 +239,8 @@ public class Controlador implements ActionListener, ListSelectionListener
 								.getTxtPiso().getText()), ventanaPersona
 								.getTxtDepartamento().getText(), ventanaPersona
 								.getTxtEmail().getText(),
-						obtenerFechaNacimiento(), contacto, localidad);
+						obtenerFechaNacimiento(), contacto, localidad,
+						ventanaPersona.getTxtApellido().getText());
 
 				if (this.ventanaPersona.getBtnAgregarPersona().getText() == "Agregar")
 				{
@@ -246,8 +273,17 @@ public class Controlador implements ActionListener, ListSelectionListener
 			this.CargarComboLocalidades(ventanaPersona);
 			this.ventanaLocalidad.getTxtNombre().setText("");
 			this.ventanaLocalidad.getTxtCodigoPostal().setText("");
-		} else if (e.getSource() == this.ventanaPersona
-				.getBtnCerrarVentanaPersona())
+
+		} else if (e.getSource() == this.vista.getBtnLocalidadVista())
+		{
+			this.ventanaLocalidad = new VentanaLocalidad(this);
+			this.llenarTablaLocalidades();
+
+		}
+
+		else if (this.ventanaPersona != null
+				&& e.getSource() == this.ventanaPersona
+						.getBtnCerrarVentanaPersona())
 		{
 			this.ventanaPersona.dispose();
 		}
@@ -258,17 +294,25 @@ public class Controlador implements ActionListener, ListSelectionListener
 			this.ventanaContacto = new VentanaContacto(this);
 			this.llenarTablaContactos();
 
-		}
+		} else if (e.getSource() == this.vista.getBtnContactoVista())
+		{
+			this.ventanaContacto = new VentanaContacto(this);
+			this.llenarTablaContactos();
 
-		else if (this.ventanaContacto != null
+		} else if (this.ventanaContacto != null
 				&& e.getSource() == this.ventanaContacto.getBtnBorrarContacto())
 		{
 			int[] filas_seleccionadas = this.ventanaContacto.getTblContactos()
 					.getSelectedRows();
 			for (int fila : filas_seleccionadas)
 			{
-				this.agenda.borrarTipoContacto(this.tipoContactos_en_tabla
-						.get(fila));
+
+				if (!this.agenda.borrarTipoContacto(this.tipoContactos_en_tabla
+						.get(fila)))
+					messageBox(
+							"Se ha producido un error y no se borró el registro.",
+							"Imposible borrar");
+
 			}
 
 			this.llenarTablaContactos();
@@ -362,8 +406,13 @@ public class Controlador implements ActionListener, ListSelectionListener
 					.getTablaLocalidades().getSelectedRows();
 			for (int fila : filas_seleccionadas)
 			{
-				this.agenda
-						.borrarLocalidad(this.localidades_en_tabla.get(fila));
+				if (!this.agenda.borrarLocalidad(this.localidades_en_tabla
+						.get(fila)))
+
+					messageBox(
+							"Se ha producido un error y no se borró el registro.",
+							"Imposible borrar");
+
 			}
 
 			this.llenarTablaLocalidades();
@@ -409,6 +458,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 			}
 
 		}
+
 	}
 
 	private String formPersonaValido()
@@ -474,8 +524,9 @@ public class Controlador implements ActionListener, ListSelectionListener
 			}
 
 		} else
-			retorno += "El campo " + nombreCampo
-					+ " no puede ser nulo. Coloque 0 como valor por defecto\n";
+			retorno += "El campo "
+					+ nombreCampo
+					+ " no puede estar vacío. Coloque 0 como valor por defecto\n";
 
 		return retorno;
 	}
@@ -493,7 +544,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 						+ " no tiene el formato correcto: (11)1234-5678\n";
 			}
 		} else
-			retorno = "El campo " + nombreCampo + " no puede ser nulo.\n";
+			retorno = "El campo " + nombreCampo + " no puede ser vacío.\n";
 
 		return retorno;
 	}
@@ -501,7 +552,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 	private String validaString(String valor, String nombreCampo)
 	{
 		if (valor == null || valor.trim().isEmpty())
-			return "El campo " + nombreCampo + " no puede ser nulo.\n";
+			return "El campo " + nombreCampo + " no puede ser vacío.\n";
 
 		return "";
 	}
@@ -515,10 +566,10 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			if (!email.matches(patron))
 			{
-				retorno = "El Email ingresado no tiene el formato correcto.\n";
+				retorno = "El Email ingresado no es válido.\n";
 			}
 		} else
-			retorno = "El campo Email no puede ser nulo.\n";
+			retorno = "El campo Email no puede ser vacío.\n";
 
 		return retorno;
 	}
@@ -535,6 +586,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 				SimpleDateFormat patron = new SimpleDateFormat("dd/MM/yyyy");
 				try
 				{
+					patron.setLenient(false);
 					Date fecha = patron.parse(valor);
 
 				} catch (ParseException e)
@@ -545,16 +597,16 @@ public class Controlador implements ActionListener, ListSelectionListener
 			} else
 				retorno += "El campo "
 						+ nombreCampo
-						+ " tiene un formato incorrecto. Debe ser [mm/dd/aaaa]\n";
+						+ " tiene un formato incorrecto. Debe ser [dd/mm/aaaa]\n";
 		} else
-			retorno += "El campo " + nombreCampo + " no puede ser nulo\n";
+			retorno += "El campo " + nombreCampo + " no puede ser vacío\n";
 
 		return retorno;
 	}
 
 	private String formatearFecha(Date fecha)
 	{
-		DateFormat format = new SimpleDateFormat("d/M/yyyy",
+		DateFormat format = new SimpleDateFormat("dd/MM/yyyy",
 				Locale.getDefault());
 		String retorno;
 
@@ -565,7 +617,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 	private Date obtenerFechaNacimiento()
 	{
-		DateFormat format = new SimpleDateFormat("d/M/yyyy",
+		DateFormat format = new SimpleDateFormat("dd/MM/yyyy",
 				Locale.getDefault());
 		Date fechaNacimiento = new Date();
 		try
@@ -601,12 +653,15 @@ public class Controlador implements ActionListener, ListSelectionListener
 	@SuppressWarnings({ "unchecked" })
 	private void CargarComboLocalidades(VentanaPersona ventanaPersona)
 	{
-		List<LocalidadDTO> oList = agenda.obtenerLocalidades();
-		ventanaPersona.getCboLocalidad().removeAllItems();
-
-		for (int i = 0; i < oList.size(); i++)
+		if (ventanaPersona != null)
 		{
-			ventanaPersona.getCboLocalidad().addItem(oList.get(i));
+			List<LocalidadDTO> oList = agenda.obtenerLocalidades();
+			ventanaPersona.getCboLocalidad().removeAllItems();
+
+			for (int i = 0; i < oList.size(); i++)
+			{
+				ventanaPersona.getCboLocalidad().addItem(oList.get(i));
+			}
 		}
 	}
 

@@ -39,6 +39,21 @@ public class ReporteAgenda
 		}
     }       
     
+    public ReporteAgenda(List<PersonaDTO> personas, String nombreReporte, Map<String, Object> parametersMap)
+    {
+    	try		{
+    		
+			this.reporte = (JasperReport) JRLoader.loadObjectFromFile( "reportes\\" + nombreReporte + ".jasper" );
+			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap, 
+					new JRBeanCollectionDataSource(personas));
+		}
+		catch( JRException ex ) 
+		{
+			ex.printStackTrace();
+		}
+    }  
+	
+    
     public void mostrar()
 	{
 		this.reporteViewer = new JasperViewer(this.reporteLleno,false);
