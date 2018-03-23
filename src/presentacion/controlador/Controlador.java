@@ -184,7 +184,24 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas());
 			reporte.mostrar();
+<<<<<<< remotes/origin/AgendaHS
 		} else if (e.getSource() == this.vista.getBtnCerrar())
+=======
+		}
+
+		else if (e.getSource() == this.vista.getBtnReporteXFechaVista())
+		{
+			Map<String, Object> parametersMap = new HashMap<String, Object>();
+			parametersMap.put("Fecha",
+					new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+
+			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerReporte(),
+					"rptContactosPorFechaNac", parametersMap, true);
+			reporte.mostrar();
+		}
+
+		else if (e.getSource() == this.vista.getBtnCerrar())
+>>>>>>> local
 		{
 
 			Conexion.getConexion().cerrarConexion();

@@ -14,6 +14,7 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 import dto.PersonaDTO;
+import dto.ReporteDTO;
 
 public class ReporteAgenda
 {
@@ -39,6 +40,39 @@ public class ReporteAgenda
 		}
     }       
     
+<<<<<<< remotes/origin/AgendaHS
+=======
+
+    public ReporteAgenda(List<PersonaDTO> personas, String nombreReporte, Map<String, Object> parametersMap)
+    {
+    	try		{
+    		
+			this.reporte = (JasperReport) JRLoader.loadObjectFromFile( "reportes\\" + nombreReporte + ".jasper" );
+			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap, 
+					new JRBeanCollectionDataSource(personas));
+		}
+		catch( JRException ex ) 
+		{
+			ex.printStackTrace();
+		}
+    }  
+	
+
+    public ReporteAgenda(List<ReporteDTO> personas, String nombreReporte, Map<String, Object> parametersMap, boolean valor)
+    {
+    	try		{
+    		
+			this.reporte = (JasperReport) JRLoader.loadObjectFromFile( "reportes\\" + nombreReporte + ".jasper" );
+			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap, 
+					new JRBeanCollectionDataSource(personas));
+		}
+		catch( JRException ex ) 
+		{
+			ex.printStackTrace();
+		}
+    }  
+    
+>>>>>>> local
     public void mostrar()
 	{
 		this.reporteViewer = new JasperViewer(this.reporteLleno,false);

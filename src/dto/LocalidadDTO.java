@@ -3,12 +3,12 @@ package dto;
 public class LocalidadDTO
 {
 	private int codigoPostal;
-	private String nombre;
+	private String nombreLocalidad;
 
 	public LocalidadDTO(int codigoPostal, String nombre)
 	{
 		this.codigoPostal = codigoPostal;
-		this.nombre = nombre;
+		this.nombreLocalidad = nombre;
 	}
 
 	public int getCodigoPostal()
@@ -23,17 +23,17 @@ public class LocalidadDTO
 
 	public String getNombre()
 	{
-		return this.nombre;
+		return this.nombreLocalidad;
 	}
 
 	public void setNombre(String nombre)
 	{
-		this.nombre = nombre;
+		this.nombreLocalidad = nombre;
 	}
 	
 	@Override
 	public String toString()
 	{
-		return this.nombre;
+		return this.nombreLocalidad;
 	}
 }
