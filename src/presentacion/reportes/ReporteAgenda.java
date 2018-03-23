@@ -40,8 +40,6 @@ public class ReporteAgenda
 		}
     }       
     
-<<<<<<< remotes/origin/AgendaHS
-=======
 
     public ReporteAgenda(List<PersonaDTO> personas, String nombreReporte, Map<String, Object> parametersMap)
     {
@@ -72,7 +70,6 @@ public class ReporteAgenda
 		}
     }  
     
->>>>>>> local
     public void mostrar()
 	{
 		this.reporteViewer = new JasperViewer(this.reporteLleno,false);

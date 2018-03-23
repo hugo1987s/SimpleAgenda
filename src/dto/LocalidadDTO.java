@@ -30,7 +30,7 @@ public class LocalidadDTO
 	{
 		this.nombreLocalidad = nombre;
 	}
-	
+
 	@Override
 	public String toString()
 	{

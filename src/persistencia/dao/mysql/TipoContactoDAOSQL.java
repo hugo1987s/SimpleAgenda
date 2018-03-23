@@ -75,7 +75,8 @@ public class TipoContactoDAOSQL implements TipoContactoDAO {
 		} 
 		catch (SQLException e) 
 		{
-			e.printStackTrace();
+			//e.printStackTrace();
+			return false;
 		}
 		return false;
 	}
