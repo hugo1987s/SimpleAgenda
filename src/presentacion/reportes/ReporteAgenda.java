@@ -14,7 +14,6 @@ import net.sf.jasperreports.engine.JasperReport;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
-import persistencia.conexion.Conexion;
 
 public class ReporteAgenda
 {
@@ -44,7 +43,7 @@ public class ReporteAgenda
 
 	public ReporteAgenda(List<PersonaDTO> personas, String nombreReporte)
 	{
-	
+
 		for (PersonaDTO personaDTO : personas)
 		{
 			System.out.println(personaDTO.toString());
@@ -54,12 +53,10 @@ public class ReporteAgenda
 				new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 		try
 		{
-			Conexion conexion = Conexion.getConexion();
-
 			this.reporte = (JasperReport) JRLoader.loadObjectFromFile(
 					"reportes/" + nombreReporte + ".jasper");
 			this.reporteLleno = JasperFillManager.fillReport(this.reporte,
-					parametersMap, conexion.getSQLConexion());
+					parametersMap, new JRBeanCollectionDataSource(personas));
 		} catch (JRException ex)
 		{
 			ex.printStackTrace();
