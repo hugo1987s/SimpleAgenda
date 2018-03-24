@@ -14,7 +14,7 @@ import persistencia.dao.interfaz.ReporteDAO;
 
 public class ReporteDAOSQL implements ReporteDAO
 {
-	private static final String readall = "Select p.Nombre, p.Apellido, p.Telefono, FechaNacimiento, tp.Tipo as TipoContacto, loc.Nombre as NombreLocalidad from personas p inner join localidades loc on p.CodigoPostal = loc.CodigoPostal inner join tipoContacto tp on p.IdTipoContacto = tp.IdTipoContacto order by FechaNacimiento asc, Apellido asc";
+	private static final String readall = "Select p.Nombre, p.Apellido, p.Telefono, FechaNacimiento, tp.Tipo as TipoContacto, loc.Nombre as NombreLocalidad from personas p inner join localidades loc on p.CodigoPostal = loc.CodigoPostal inner join tipoContacto tp on p.IdTipoContacto = tp.IdTipoContacto"; // order by FechaNacimiento asc, Apellido asc";
 
 
 	@Override

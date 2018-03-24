@@ -11,6 +11,7 @@ public class ReporteDTO
 	private String _nombreLocalidad;
 	private String _tipoContacto;
 	private String _telefono;
+	private long anio;
 	
 	public ReporteDTO(String nombre, String apellido, Date fechaNacimiento, String localidad, String tipoContacto, String telefono)
 	{
@@ -20,6 +21,16 @@ public class ReporteDTO
 		this.setNombreLocalidad(localidad);
 		this.setTipoContacto(tipoContacto);
 		this.setTelefono(telefono);
+		this.setAnio(fechaNacimiento);
+	}
+
+	public void setAnio(Date fechaNacimiento)
+	{
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(fechaNacimiento);
+		this.anio = cal.get(Calendar.YEAR);
+		
+		
 	}
 
 	public String getNombre()
@@ -82,6 +93,10 @@ public class ReporteDTO
 		this._telefono = telefono;
 	}
 	
+	public long getAnio()
+	{
+		return anio;
+	}
 	
 	
 }

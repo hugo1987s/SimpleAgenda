@@ -209,7 +209,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 					new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 
 			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerReporte(),
-					"rptContactosPorFechaNac", parametersMap, true);
+					"ReporteAgendaAnual", parametersMap, true);
 			reporte.mostrar();
 		}
 
