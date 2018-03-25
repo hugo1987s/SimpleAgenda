@@ -34,6 +34,7 @@
 			<style mode="Opaque" backcolor="#F0EFEF"/>
 		</conditionalStyle>
 	</style>
+	<parameter name="CantidadTotal" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -272,8 +273,8 @@
 				</chart>
 				<pieDataset>
 					<keyExpression><![CDATA[$F{anio}]]></keyExpression>
-					<valueExpression><![CDATA[$V{Group1_COUNT}*100/6]]></valueExpression>
-					<labelExpression><![CDATA[String.valueOf($V{Group1_COUNT}*100/6) + "%"]]></labelExpression>
+					<valueExpression><![CDATA[$V{Group1_COUNT}.floatValue()*100/$P{CantidadTotal}]]></valueExpression>
+					<labelExpression><![CDATA[String.format("%.2f", $V{Group1_COUNT}.floatValue()*100/$P{CantidadTotal}) + "%"]]></labelExpression>
 				</pieDataset>
 				<piePlot>
 					<plot/>

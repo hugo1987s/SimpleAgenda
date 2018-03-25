@@ -18,6 +18,7 @@ import javax.swing.event.ListSelectionListener;
 import dto.ContactoDTO;
 import dto.LocalidadDTO;
 import dto.PersonaDTO;
+import dto.ReporteDTO;
 import modelo.Agenda;
 import persistencia.conexion.Conexion;
 import presentacion.reportes.ReporteAgenda;
@@ -204,12 +205,15 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 		else if (e.getSource() == this.vista.getBtnReporteXFechaVista())
 		{
-			Map<String, Object> parametersMap = new HashMap<String, Object>();
-			parametersMap.put("Fecha",
-					new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+			List<ReporteDTO> lista = agenda.obtenerReporte();
 			
-			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerReporte(),
+			Map<String, Object> parametersMap = new HashMap<String, Object>();
+			parametersMap.put("CantidadTotal", lista.size());
+			
+			
+			ReporteAgenda reporte = new ReporteAgenda(lista,
 					"ReporteAgendaAnual", parametersMap, true);
+			
 			reporte.mostrar();
 		}
 
