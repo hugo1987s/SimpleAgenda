@@ -204,19 +204,12 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 		else if (e.getSource() == this.vista.getBtnReporteXFechaVista())
 		{
-			/*Map<String, Object> parametersMap = new HashMap<String, Object>();
+			Map<String, Object> parametersMap = new HashMap<String, Object>();
 			parametersMap.put("Fecha",
 					new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-*/
-			Map<String, Object> chartParameters = new HashMap<String, Object>();
-			chartParameters.put("1999", 2);
-			chartParameters.put("2000", 3);
-			chartParameters.put("2001", 4);
-			chartParameters.put("2002", 5);
-			
 			
 			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerReporte(),
-					"ReporteAgendaAnual", chartParameters, true);
+					"ReporteAgendaAnual", parametersMap, true);
 			reporte.mostrar();
 		}
 
