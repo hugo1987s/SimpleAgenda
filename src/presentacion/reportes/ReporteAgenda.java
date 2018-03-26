@@ -1,10 +1,14 @@
 package presentacion.reportes;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -45,7 +49,8 @@ public class ReporteAgenda
     {
     	try		{
     		
-			this.reporte = (JasperReport) JRLoader.loadObjectFromFile( "reportes\\" + nombreReporte + ".jasper" );
+			//this.reporte = (JasperReport) JRLoader.loadObjectFromFile( "reportes\\" + nombreReporte + ".jasper" );
+    		this.reporte = (JasperReport) JRLoader.loadObjectFromFile(getPropertyValue(nombreReporte) );
 			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap, 
 					new JRBeanCollectionDataSource(personas));
 		}
@@ -58,9 +63,12 @@ public class ReporteAgenda
 
     public ReporteAgenda(List<ReporteDTO> personas, String nombreReporte, Map<String, Object> parametersMap, boolean valor)
     {
+    	
+    	
     	try		{
     		
-			this.reporte = (JasperReport) JRLoader.loadObjectFromFile( "reportes\\" + nombreReporte + ".jasper" );
+			//this.reporte = (JasperReport) JRLoader.loadObjectFromFile( "reportes\\" + nombreReporte + ".jasper" );
+    		this.reporte = (JasperReport) JRLoader.loadObjectFromFile(getPropertyValue(nombreReporte) );
 			this.reporteLleno = JasperFillManager.fillReport(this.reporte, parametersMap, 
 					new JRBeanCollectionDataSource(personas));
 			
@@ -70,6 +78,26 @@ public class ReporteAgenda
 			ex.printStackTrace();
 		}
     }  
+    
+    private String getPropertyValue(String propertyKey)
+    {
+    	Properties p = new Properties();
+    	try
+		{
+			p.load(new FileReader("src/configuracion/config.properties"));
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+			return "";
+		} catch (IOException e)
+		{
+			
+			e.printStackTrace();
+			return "";
+		}
+    	return p.getProperty(propertyKey);
+    }
+    
     
     public void mostrar()
 	{
