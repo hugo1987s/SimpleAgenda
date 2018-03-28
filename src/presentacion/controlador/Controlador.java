@@ -206,14 +206,13 @@ public class Controlador implements ActionListener, ListSelectionListener
 		else if (e.getSource() == this.vista.getBtnReporteXFechaVista())
 		{
 			List<ReporteDTO> lista = agenda.obtenerReporte();
-			
+
 			Map<String, Object> parametersMap = new HashMap<String, Object>();
 			parametersMap.put("CantidadTotal", lista.size());
-			
-			
+
 			ReporteAgenda reporte = new ReporteAgenda(lista,
 					"ReporteAgendaAnual", parametersMap, true);
-			
+
 			reporte.mostrar();
 		}
 
@@ -645,12 +644,15 @@ public class Controlador implements ActionListener, ListSelectionListener
 	@SuppressWarnings("unchecked")
 	private void CargarComboContacto(VentanaPersona ventanaPersona)
 	{
-		List<ContactoDTO> oList = agenda.obtenerTipoContacto();
-		ventanaPersona.getCboContacto().removeAllItems();
-
-		for (int i = 0; i < oList.size(); i++)
+		if (ventanaPersona != null)
 		{
-			ventanaPersona.getCboContacto().addItem(oList.get(i));
+			List<ContactoDTO> oList = agenda.obtenerTipoContacto();
+			ventanaPersona.getCboContacto().removeAllItems();
+
+			for (int i = 0; i < oList.size(); i++)
+			{
+				ventanaPersona.getCboContacto().addItem(oList.get(i));
+			}
 		}
 	}
 
@@ -677,32 +679,39 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			if (this.ventanaContacto.getTblContactos().getRowCount() > 0)
 			{
-				String valor = this.ventanaContacto
-						.getTblContactos()
-						.getValueAt(
-								this.ventanaContacto.getTblContactos()
-										.getSelectedRow(), 1).toString();
+				if (this.ventanaContacto.getTblContactos().getSelectedRow() >= 0)
+				{
+					String valor = this.ventanaContacto
+							.getTblContactos()
+							.getValueAt(
+									this.ventanaContacto.getTblContactos()
+											.getSelectedRow(), 1).toString();
 
-				ventanaContacto.getTxtDescripcion().setText(valor);
+					ventanaContacto.getTxtDescripcion().setText(valor);
+				}
 			}
 		}
 		if (this.ventanaLocalidad != null)
 		{
 			if (this.ventanaLocalidad.getTablaLocalidades().getRowCount() > 0)
 			{
-				String codigoPostal = this.ventanaLocalidad
-						.getTablaLocalidades()
-						.getValueAt(
-								this.ventanaLocalidad.getTablaLocalidades()
-										.getSelectedRow(), 0).toString();
-				String nombreLocalidad = this.ventanaLocalidad
-						.getTablaLocalidades()
-						.getValueAt(
-								this.ventanaLocalidad.getTablaLocalidades()
-										.getSelectedRow(), 1).toString();
+				if (this.ventanaLocalidad.getTablaLocalidades()
+						.getSelectedRow() >= 0)
+				{
+					String codigoPostal = this.ventanaLocalidad
+							.getTablaLocalidades()
+							.getValueAt(
+									this.ventanaLocalidad.getTablaLocalidades()
+											.getSelectedRow(), 0).toString();
+					String nombreLocalidad = this.ventanaLocalidad
+							.getTablaLocalidades()
+							.getValueAt(
+									this.ventanaLocalidad.getTablaLocalidades()
+											.getSelectedRow(), 1).toString();
 
-				ventanaLocalidad.getTxtCodigoPostal().setText(codigoPostal);
-				ventanaLocalidad.getTxtNombre().setText(nombreLocalidad);
+					ventanaLocalidad.getTxtCodigoPostal().setText(codigoPostal);
+					ventanaLocalidad.getTxtNombre().setText(nombreLocalidad);
+				}
 
 			}
 		}
