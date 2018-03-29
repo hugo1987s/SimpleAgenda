@@ -18,6 +18,7 @@ import javax.swing.event.ListSelectionListener;
 import dto.ContactoDTO;
 import dto.LocalidadDTO;
 import dto.PersonaDTO;
+import dto.ReporteDTO;
 import modelo.Agenda;
 import persistencia.conexion.Conexion;
 import presentacion.reportes.ReporteAgenda;
@@ -197,18 +198,20 @@ public class Controlador implements ActionListener, ListSelectionListener
 					new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 
 			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas(),
-					"ReporteAgenda");
+					"ReporteAgenda", parametersMap);
 			reporte.mostrar();
 		}
 
 		else if (e.getSource() == this.vista.getBtnReporteXFechaVista())
 		{
-			Map<String, Object> parametersMap = new HashMap<String, Object>();
-			parametersMap.put("Fecha",
-					new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+			List<ReporteDTO> lista = agenda.obtenerReporte();
 
-			ReporteAgenda reporte = new ReporteAgenda(agenda.obtenerPersonas(),
-					"rptContactosPorFechaNac");
+			Map<String, Object> parametersMap = new HashMap<String, Object>();
+			parametersMap.put("CantidadTotal", lista.size());
+
+			ReporteAgenda reporte = new ReporteAgenda(lista,
+					"ReporteAgendaAnual", parametersMap, true);
+
 			reporte.mostrar();
 		}
 
@@ -278,7 +281,6 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			this.ventanaLocalidad = new VentanaLocalidad(this);
 			this.llenarTablaLocalidades();
-
 		}
 
 		else if (this.ventanaPersona != null
@@ -298,7 +300,6 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			this.ventanaContacto = new VentanaContacto(this);
 			this.llenarTablaContactos();
-
 		} else if (this.ventanaContacto != null
 				&& e.getSource() == this.ventanaContacto.getBtnBorrarContacto())
 		{
@@ -408,11 +409,46 @@ public class Controlador implements ActionListener, ListSelectionListener
 					messageBox(
 							"Se ha producido un error y no se borr� el registro.",
 							"Imposible borrar");
-
 			}
 
 			this.llenarTablaLocalidades();
 			this.CargarComboLocalidades(ventanaPersona);
+		}
+
+		else if (this.ventanaLocalidad != null && e
+				.getSource() == this.ventanaLocalidad.getBtnCerrarLocalidad())
+		{
+			this.ventanaLocalidad.dispose();
+
+		} else if (this.ventanaLocalidad != null && e
+				.getSource() == this.ventanaLocalidad.getBtnEditarLocalidad())
+		{
+			String errores = formLocalidadValido();
+			if (errores.isEmpty())
+			{
+				int codigoPostal = Integer.parseInt(this.ventanaLocalidad
+						.getTablaLocalidades().getValueAt(this.ventanaLocalidad
+								.getTablaLocalidades().getSelectedRow(), 0)
+						.toString());
+
+				String valor = this.ventanaLocalidad.getTxtNombre().getText();
+
+				if (valor.trim() != "")
+				{
+					LocalidadDTO objLocalidad = new LocalidadDTO(codigoPostal,
+							valor.trim());
+
+					this.agenda.editarLocalidad(objLocalidad);
+					this.llenarTablaLocalidades();
+					this.CargarComboLocalidades(ventanaPersona);
+					this.ventanaLocalidad.getTxtNombre().setText("");
+					this.ventanaLocalidad.getTxtCodigoPostal().setText("");
+				}
+
+			} else
+			{
+				messageBox(errores, "Validaci�n de datos");
+			}
 		}
 
 		else if (this.ventanaLocalidad != null && e
@@ -633,12 +669,15 @@ public class Controlador implements ActionListener, ListSelectionListener
 	@SuppressWarnings("unchecked")
 	private void CargarComboContacto(VentanaPersona ventanaPersona)
 	{
-		List<ContactoDTO> oList = agenda.obtenerTipoContacto();
-		ventanaPersona.getCboContacto().removeAllItems();
-
-		for (int i = 0; i < oList.size(); i++)
+		if (ventanaPersona != null)
 		{
-			ventanaPersona.getCboContacto().addItem(oList.get(i));
+			List<ContactoDTO> oList = agenda.obtenerTipoContacto();
+			ventanaPersona.getCboContacto().removeAllItems();
+
+			for (int i = 0; i < oList.size(); i++)
+			{
+				ventanaPersona.getCboContacto().addItem(oList.get(i));
+			}
 		}
 	}
 
@@ -665,30 +704,39 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			if (this.ventanaContacto.getTblContactos().getRowCount() > 0)
 			{
-				String valor = this.ventanaContacto
-						.getTblContactos().getValueAt(this.ventanaContacto
-								.getTblContactos().getSelectedRow(), 1)
-						.toString();
+				if (this.ventanaContacto.getTblContactos()
+						.getSelectedRow() >= 0)
+				{
+					String valor = this.ventanaContacto
+							.getTblContactos().getValueAt(this.ventanaContacto
+									.getTblContactos().getSelectedRow(), 1)
+							.toString();
 
-				ventanaContacto.getTxtDescripcion().setText(valor);
+					ventanaContacto.getTxtDescripcion().setText(valor);
+				}
 			}
 		}
 		if (this.ventanaLocalidad != null)
 		{
 			if (this.ventanaLocalidad.getTablaLocalidades().getRowCount() > 0)
 			{
-				String codigoPostal = this.ventanaLocalidad
-						.getTablaLocalidades().getValueAt(this.ventanaLocalidad
-								.getTablaLocalidades().getSelectedRow(), 0)
-						.toString();
-				String nombreLocalidad = this.ventanaLocalidad
-						.getTablaLocalidades().getValueAt(this.ventanaLocalidad
-								.getTablaLocalidades().getSelectedRow(), 1)
-						.toString();
+				if (this.ventanaLocalidad.getTablaLocalidades()
+						.getSelectedRow() >= 0)
+				{
+					String codigoPostal = this.ventanaLocalidad
+							.getTablaLocalidades()
+							.getValueAt(this.ventanaLocalidad
+									.getTablaLocalidades().getSelectedRow(), 0)
+							.toString();
+					String nombreLocalidad = this.ventanaLocalidad
+							.getTablaLocalidades()
+							.getValueAt(this.ventanaLocalidad
+									.getTablaLocalidades().getSelectedRow(), 1)
+							.toString();
 
-				ventanaLocalidad.getTxtCodigoPostal().setText(codigoPostal);
-				ventanaLocalidad.getTxtNombre().setText(nombreLocalidad);
-
+					ventanaLocalidad.getTxtCodigoPostal().setText(codigoPostal);
+					ventanaLocalidad.getTxtNombre().setText(nombreLocalidad);
+				}
 			}
 		}
 	}

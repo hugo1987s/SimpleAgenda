@@ -16,7 +16,7 @@ public class LocalidadDAOSQL implements LocalidadDAO
 	private static final String delete = "DELETE FROM localidades WHERE codigoPostal = ?";
 	private static final String readall = "SELECT * FROM localidades";
 	private static final String update = "UPDATE localidades SET nombre = ? WHERE codigoPostal = ?";
-	
+
 	public boolean insert(LocalidadDTO localidad)
 	{
 		PreparedStatement statement;
@@ -43,16 +43,17 @@ public class LocalidadDAOSQL implements LocalidadDAO
 		try
 		{
 			statement = conexion.getSQLConexion().prepareStatement(delete);
-			statement.setString(1, Integer.toString(localidad_a_eliminar.getCodigoPostal()));
+			statement.setString(1,
+					Integer.toString(localidad_a_eliminar.getCodigoPostal()));
 			chequeoUpdate = statement.executeUpdate();
 			if (chequeoUpdate > 0) // Si se ejecutÃ³ devuelvo true
 				return true;
 		} catch (SQLException e)
 		{
-			//e.printStackTrace();
+			// e.printStackTrace();
 			return false;
 		}
-		
+
 		return false;
 	}
 
@@ -69,7 +70,9 @@ public class LocalidadDAOSQL implements LocalidadDAO
 
 			while (resultSet.next())
 			{
-				localidades.add(new LocalidadDTO(resultSet.getInt("codigoPostal"), resultSet.getString("Nombre")));
+				localidades
+						.add(new LocalidadDTO(resultSet.getInt("codigoPostal"),
+								resultSet.getString("Nombre")));
 			}
 		} catch (SQLException e)
 		{
@@ -79,21 +82,20 @@ public class LocalidadDAOSQL implements LocalidadDAO
 	}
 
 	@Override
-	public boolean edit(LocalidadDTO localidad_a_editar) {
-		
+	public boolean edit(LocalidadDTO localidad_a_editar)
+	{
+
 		PreparedStatement statement;
 		Conexion conexion = Conexion.getConexion();
-		try 
+		try
 		{
 			statement = conexion.getSQLConexion().prepareStatement(update);
 			statement.setString(1, localidad_a_editar.getNombre());
 			statement.setInt(2, localidad_a_editar.getCodigoPostal());
-			
-			
-			if(statement.executeUpdate() > 0) //Si se ejecutó devuelvo true
+
+			if (statement.executeUpdate() > 0) // Si se ejecutï¿½ devuelvo true
 				return true;
-		} 
-		catch (SQLException e) 
+		} catch (SQLException e)
 		{
 			e.printStackTrace();
 		}
