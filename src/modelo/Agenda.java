@@ -84,7 +84,7 @@ public class Agenda
 	{
 		return this.localidad.readAll();
 	}
-	
+
 	public void editarLocalidad(LocalidadDTO localidad_a_editar)
 	{
 		this.localidad.edit(localidad_a_editar);

@@ -11,7 +11,8 @@ import javax.swing.table.DefaultTableModel;
 
 import presentacion.controlador.Controlador;
 
-public class VentanaLocalidad extends JFrame {
+public class VentanaLocalidad extends JFrame
+{
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable tablaLocalidades;
@@ -19,7 +20,7 @@ public class VentanaLocalidad extends JFrame {
 	private JButton btnEditar;
 	private JButton btnBorrar;
 	private DefaultTableModel modelLocalidades;
-	//private String[] nombreColumnas = { "Nombre", "Codigo Postal" };
+	// private String[] nombreColumnas = { "Nombre", "Codigo Postal" };
 	private String[] nombreColumnas = { "Codigo Postal", "Nombre" };
 	private Controlador controlador;
 	private JTextField txtNombreLocalidad;
@@ -28,7 +29,8 @@ public class VentanaLocalidad extends JFrame {
 	private JTextField txtCodigoPostal;
 	private JButton btnCerrar;
 
-	public VentanaLocalidad(Controlador controlador) {
+	public VentanaLocalidad(Controlador controlador)
+	{
 		super();
 		this.controlador = controlador;
 
@@ -95,44 +97,54 @@ public class VentanaLocalidad extends JFrame {
 		btnCerrar.addActionListener(this.controlador);
 		panel.add(btnCerrar);
 
-		this.tablaLocalidades.getSelectionModel().addListSelectionListener(this.controlador);
-		
+		this.tablaLocalidades.getSelectionModel()
+				.addListSelectionListener(this.controlador);
+
 		this.setVisible(true);
 	}
 
-	public JTextField getTxtNombre() {
+	public JTextField getTxtNombre()
+	{
 		return txtNombreLocalidad;
 	}
 
-	public JTextField getTxtCodigoPostal() {
+	public JTextField getTxtCodigoPostal()
+	{
 		return txtCodigoPostal;
 	}
 
-	public JButton getBtnAgregarLocalidad() {
+	public JButton getBtnAgregarLocalidad()
+	{
 		return btnAgregar;
 	}
 
-	public JButton getBtnBorrarLocalidad() {
+	public JButton getBtnBorrarLocalidad()
+	{
 		return btnBorrar;
 	}
 
-	public DefaultTableModel getModelLocalidades() {
+	public DefaultTableModel getModelLocalidades()
+	{
 		return modelLocalidades;
 	}
 
-	public JTable getTablaLocalidades() {
+	public JTable getTablaLocalidades()
+	{
 		return tablaLocalidades;
 	}
 
-	public String[] getNombreColumnas() {
+	public String[] getNombreColumnas()
+	{
 		return nombreColumnas;
 	}
 
-	public JButton getBtnCerrarLocalidad() {
+	public JButton getBtnCerrarLocalidad()
+	{
 		return btnCerrar;
 	}
 
-	public JButton getBtnEditarLocalidad() {
+	public JButton getBtnEditarLocalidad()
+	{
 		return btnEditar;
 	}
 }

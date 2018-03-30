@@ -68,14 +68,13 @@ public class Controlador implements ActionListener, ListSelectionListener
 	{
 		this.vista.getModelPersonas().setRowCount(0); // Para vaciar la tabla
 		this.vista.getModelPersonas().setColumnCount(0);
-		this.vista.getModelPersonas().setColumnIdentifiers(
-				this.vista.getNombreColumnas());
+		this.vista.getModelPersonas()
+				.setColumnIdentifiers(this.vista.getNombreColumnas());
 
 		this.personas_en_tabla = agenda.obtenerPersonas();
 		for (int i = 0; i < this.personas_en_tabla.size(); i++)
 		{
-			Object[] fila = {
-					this.personas_en_tabla.get(i).getIdPersona(),
+			Object[] fila = { this.personas_en_tabla.get(i).getIdPersona(),
 					this.personas_en_tabla.get(i).getNombre(),
 					this.personas_en_tabla.get(i).getApellido(),
 					this.personas_en_tabla.get(i).getTelefono(),
@@ -87,8 +86,8 @@ public class Controlador implements ActionListener, ListSelectionListener
 							.getCodigoPostal(),
 					this.personas_en_tabla.get(i).getLocalidad().getNombre(),
 					this.personas_en_tabla.get(i).getEmail(),
-					formatearFecha(this.personas_en_tabla.get(i)
-							.getFechaNacimiento()),
+					formatearFecha(
+							this.personas_en_tabla.get(i).getFechaNacimiento()),
 					this.personas_en_tabla.get(i).getContacto().getTipo()
 
 			};
@@ -119,8 +118,8 @@ public class Controlador implements ActionListener, ListSelectionListener
 		this.ventanaContacto.getModelContactos().setRowCount(0); // Para vaciar
 																	// la tabla
 		this.ventanaContacto.getModelContactos().setColumnCount(0);
-		this.ventanaContacto.getModelContactos().setColumnIdentifiers(
-				this.ventanaContacto.getNombreColumnas());
+		this.ventanaContacto.getModelContactos()
+				.setColumnIdentifiers(this.ventanaContacto.getNombreColumnas());
 
 		this.tipoContactos_en_tabla = agenda.obtenerTipoContacto();
 		for (int i = 0; i < this.tipoContactos_en_tabla.size(); i++)
@@ -165,24 +164,24 @@ public class Controlador implements ActionListener, ListSelectionListener
 				}
 
 				this.ventanaPersona = new VentanaPersona(this);
-				this.ventanaPersona.getTxtID().setText(
-						String.valueOf(oPersona.getIdPersona()));
+				this.ventanaPersona.getTxtID()
+						.setText(String.valueOf(oPersona.getIdPersona()));
 				this.ventanaPersona.getTxtNombre()
 						.setText(oPersona.getNombre());
-				this.ventanaPersona.getTxtApellido().setText(
-						oPersona.getApellido());
-				this.ventanaPersona.getTxtTelefono().setText(
-						oPersona.getTelefono());
+				this.ventanaPersona.getTxtApellido()
+						.setText(oPersona.getApellido());
+				this.ventanaPersona.getTxtTelefono()
+						.setText(oPersona.getTelefono());
 				this.ventanaPersona.getTxtCalle().setText(oPersona.getCalle());
-				this.ventanaPersona.getTxtAltura().setText(
-						String.valueOf(oPersona.getAltura()));
-				this.ventanaPersona.getTxtPiso().setText(
-						String.valueOf(oPersona.getPiso()));
-				this.ventanaPersona.getTxtDepartamento().setText(
-						oPersona.getDepartamento());
+				this.ventanaPersona.getTxtAltura()
+						.setText(String.valueOf(oPersona.getAltura()));
+				this.ventanaPersona.getTxtPiso()
+						.setText(String.valueOf(oPersona.getPiso()));
+				this.ventanaPersona.getTxtDepartamento()
+						.setText(oPersona.getDepartamento());
 				this.ventanaPersona.getTxtEmail().setText(oPersona.getEmail());
-				this.ventanaPersona.getTxtFechaNacimiento().setText(
-						formatearFecha(oPersona.getFechaNacimiento()));
+				this.ventanaPersona.getTxtFechaNacimiento()
+						.setText(formatearFecha(oPersona.getFechaNacimiento()));
 				this.ventanaPersona.getBtnAgregarPersona().setText("Editar");
 				CargarCombos(this.ventanaPersona);
 
@@ -235,25 +234,26 @@ public class Controlador implements ActionListener, ListSelectionListener
 				LocalidadDTO localidad = (LocalidadDTO) ventanaPersona
 						.getCboLocalidad().getSelectedItem();
 
-				PersonaDTO objPersona = new PersonaDTO(0, this.ventanaPersona
-						.getTxtNombre().getText(), ventanaPersona
-						.getTxtTelefono().getText(), ventanaPersona
-						.getTxtCalle().getText(),
-						Integer.parseInt(ventanaPersona.getTxtAltura()
-								.getText()), Integer.parseInt(ventanaPersona
-								.getTxtPiso().getText()), ventanaPersona
-								.getTxtDepartamento().getText(), ventanaPersona
-								.getTxtEmail().getText(),
+				PersonaDTO objPersona = new PersonaDTO(0,
+						this.ventanaPersona.getTxtNombre().getText(),
+						ventanaPersona.getTxtTelefono().getText(),
+						ventanaPersona.getTxtCalle().getText(),
+						Integer.parseInt(
+								ventanaPersona.getTxtAltura().getText()),
+						Integer.parseInt(ventanaPersona.getTxtPiso().getText()),
+						ventanaPersona.getTxtDepartamento().getText(),
+						ventanaPersona.getTxtEmail().getText(),
 						obtenerFechaNacimiento(), contacto, localidad,
 						ventanaPersona.getTxtApellido().getText());
 
-				if (this.ventanaPersona.getBtnAgregarPersona().getText() == "Agregar")
+				if (this.ventanaPersona.getBtnAgregarPersona()
+						.getText() == "Agregar")
 				{
 					this.agenda.agregarPersona(objPersona);
 				} else
 				{
-					objPersona.setIdPersona(Integer.parseInt(ventanaPersona
-							.getTxtID().getText()));
+					objPersona.setIdPersona(Integer
+							.parseInt(ventanaPersona.getTxtID().getText()));
 					this.agenda.editarPersona(objPersona);
 				}
 
@@ -263,7 +263,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 			} else
 			{
-				messageBox(errores, "Validación de datos");
+				messageBox(errores, "Validaciï¿½n de datos");
 
 			}
 
@@ -283,7 +283,6 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			this.ventanaLocalidad = new VentanaLocalidad(this);
 			this.llenarTablaLocalidades();
-
 		}
 
 		else if (this.ventanaPersona != null
@@ -303,7 +302,6 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			this.ventanaContacto = new VentanaContacto(this);
 			this.llenarTablaContactos();
-
 		} else if (this.ventanaContacto != null
 				&& e.getSource() == this.ventanaContacto.getBtnBorrarContacto())
 		{
@@ -312,10 +310,10 @@ public class Controlador implements ActionListener, ListSelectionListener
 			for (int fila : filas_seleccionadas)
 			{
 
-				if (!this.agenda.borrarTipoContacto(this.tipoContactos_en_tabla
-						.get(fila)))
+				if (!this.agenda.borrarTipoContacto(
+						this.tipoContactos_en_tabla.get(fila)))
 					messageBox(
-							"Se ha producido un error y no se borró el registro.",
+							"Se ha producido un error y no se borrï¿½ el registro.",
 							"Imposible borrar");
 
 			}
@@ -331,9 +329,8 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 		}
 
-		else if (this.ventanaContacto != null
-				&& e.getSource() == this.ventanaContacto
-						.getBtnAgregarContacto())
+		else if (this.ventanaContacto != null && e
+				.getSource() == this.ventanaContacto.getBtnAgregarContacto())
 		{
 			String errores = formContactoValido();
 			if (errores.isEmpty())
@@ -348,7 +345,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 			} else
 			{
-				messageBox(errores, "Validación de datos");
+				messageBox(errores, "Validaciï¿½n de datos");
 			}
 
 		} else if (this.ventanaContacto != null
@@ -358,10 +355,9 @@ public class Controlador implements ActionListener, ListSelectionListener
 			if (errores.isEmpty())
 			{
 				int idContacto = Integer.parseInt(this.ventanaContacto
-						.getTblContactos()
-						.getValueAt(
-								this.ventanaContacto.getTblContactos()
-										.getSelectedRow(), 0).toString());
+						.getTblContactos().getValueAt(this.ventanaContacto
+								.getTblContactos().getSelectedRow(), 0)
+						.toString());
 
 				String valor = this.ventanaContacto.getTxtDescripcion()
 						.getText();
@@ -375,12 +371,11 @@ public class Controlador implements ActionListener, ListSelectionListener
 				this.ventanaContacto.getTxtDescripcion().setText("");
 			} else
 			{
-				messageBox(errores, "Validación de datos");
+				messageBox(errores, "Validaciï¿½n de datos");
 			}
 
-		} else if (this.ventanaLocalidad != null
-				&& e.getSource() == this.ventanaLocalidad
-						.getBtnAgregarLocalidad())
+		} else if (this.ventanaLocalidad != null && e
+				.getSource() == this.ventanaLocalidad.getBtnAgregarLocalidad())
 		{
 
 			String errores = formLocalidadValido();
@@ -399,49 +394,44 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 			} else
 			{
-				messageBox(errores, "Validación de datos");
+				messageBox(errores, "Validaciï¿½n de datos");
 			}
 		}
 
-		else if (this.ventanaLocalidad != null
-				&& e.getSource() == this.ventanaLocalidad
-						.getBtnBorrarLocalidad())
+		else if (this.ventanaLocalidad != null && e
+				.getSource() == this.ventanaLocalidad.getBtnBorrarLocalidad())
 		{
 			int[] filas_seleccionadas = this.ventanaLocalidad
 					.getTablaLocalidades().getSelectedRows();
 			for (int fila : filas_seleccionadas)
 			{
-				if (!this.agenda.borrarLocalidad(this.localidades_en_tabla
-						.get(fila)))
+				if (!this.agenda
+						.borrarLocalidad(this.localidades_en_tabla.get(fila)))
 
 					messageBox(
-							"Se ha producido un error y no se borró el registro.",
+							"Se ha producido un error y no se borrï¿½ el registro.",
 							"Imposible borrar");
-
 			}
 
 			this.llenarTablaLocalidades();
 			this.CargarComboLocalidades(ventanaPersona);
 		}
 
-		else if (this.ventanaLocalidad != null
-				&& e.getSource() == this.ventanaLocalidad
-						.getBtnCerrarLocalidad())
+		else if (this.ventanaLocalidad != null && e
+				.getSource() == this.ventanaLocalidad.getBtnCerrarLocalidad())
 		{
 			this.ventanaLocalidad.dispose();
 
-		} else if (this.ventanaLocalidad != null
-				&& e.getSource() == this.ventanaLocalidad
-						.getBtnEditarLocalidad())
+		} else if (this.ventanaLocalidad != null && e
+				.getSource() == this.ventanaLocalidad.getBtnEditarLocalidad())
 		{
 			String errores = formLocalidadValido();
 			if (errores.isEmpty())
 			{
 				int codigoPostal = Integer.parseInt(this.ventanaLocalidad
-						.getTablaLocalidades()
-						.getValueAt(
-								this.ventanaLocalidad.getTablaLocalidades()
-										.getSelectedRow(), 0).toString());
+						.getTablaLocalidades().getValueAt(this.ventanaLocalidad
+								.getTablaLocalidades().getSelectedRow(), 0)
+						.toString());
 
 				String valor = this.ventanaLocalidad.getTxtNombre().getText();
 
@@ -459,7 +449,43 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 			} else
 			{
-				messageBox(errores, "Validación de datos");
+				messageBox(errores, "Validaciï¿½n de datos");
+			}
+		}
+
+		else if (this.ventanaLocalidad != null && e
+				.getSource() == this.ventanaLocalidad.getBtnCerrarLocalidad())
+		{
+			this.ventanaLocalidad.dispose();
+
+		} else if (this.ventanaLocalidad != null && e
+				.getSource() == this.ventanaLocalidad.getBtnEditarLocalidad())
+		{
+			String errores = formLocalidadValido();
+			if (errores.isEmpty())
+			{
+				int codigoPostal = Integer.parseInt(this.ventanaLocalidad
+						.getTablaLocalidades().getValueAt(this.ventanaLocalidad
+								.getTablaLocalidades().getSelectedRow(), 0)
+						.toString());
+
+				String valor = this.ventanaLocalidad.getTxtNombre().getText();
+
+				if (valor.trim() != "")
+				{
+					LocalidadDTO objLocalidad = new LocalidadDTO(codigoPostal,
+							valor.trim());
+
+					this.agenda.editarLocalidad(objLocalidad);
+					this.llenarTablaLocalidades();
+					this.CargarComboLocalidades(ventanaPersona);
+					this.ventanaLocalidad.getTxtNombre().setText("");
+					this.ventanaLocalidad.getTxtCodigoPostal().setText("");
+				}
+
+			} else
+			{
+				messageBox(errores, "Validaciï¿½n de datos");
 			}
 
 		}
@@ -473,8 +499,9 @@ public class Controlador implements ActionListener, ListSelectionListener
 		retorno += validaString(ventanaPersona.getTxtNombre().getText(),
 				"Nombre y apellido");
 		retorno += validaTelefono(ventanaPersona.getTxtTelefono().getText(),
-				"Teléfono");
-		retorno += validaString(ventanaPersona.getTxtCalle().getText(), "Calle");
+				"Telï¿½fono");
+		retorno += validaString(ventanaPersona.getTxtCalle().getText(),
+				"Calle");
 		retorno += validaNumero(ventanaPersona.getTxtAltura().getText(),
 				"Altura");
 		retorno += validaNumero(ventanaPersona.getTxtPiso().getText(), "Piso");
@@ -483,8 +510,9 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 		retorno += validarEmail(ventanaPersona.getTxtEmail().getText());
 
-		retorno += validarFormatoFechas(ventanaPersona.getTxtFechaNacimiento()
-				.getText(), "Fecha de Cumpleaños");
+		retorno += validarFormatoFechas(
+				ventanaPersona.getTxtFechaNacimiento().getText(),
+				"Fecha de Cumpleaï¿½os");
 
 		return retorno;
 	}
@@ -503,8 +531,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 	{
 		String retorno = "";
 
-		retorno += validaNumero(
-				ventanaLocalidad.getTxtCodigoPostal().getText(),
+		retorno += validaNumero(ventanaLocalidad.getTxtCodigoPostal().getText(),
 				"Codigo Postal");
 		retorno += validaString(ventanaLocalidad.getTxtNombre().getText(),
 				"Nombre de Localidad");
@@ -525,13 +552,12 @@ public class Controlador implements ActionListener, ListSelectionListener
 			} catch (NumberFormatException e)
 			{
 				retorno += "El campo " + nombreCampo
-						+ " no es un número válido.\n";
+						+ " no es un nï¿½mero vï¿½lido.\n";
 			}
 
 		} else
-			retorno += "El campo "
-					+ nombreCampo
-					+ " no puede estar vacío. Coloque 0 como valor por defecto\n";
+			retorno += "El campo " + nombreCampo
+					+ " no puede estar vacï¿½o. Coloque 0 como valor por defecto\n";
 
 		return retorno;
 	}
@@ -549,7 +575,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 						+ " no tiene el formato correcto: (11)1234-5678\n";
 			}
 		} else
-			retorno = "El campo " + nombreCampo + " no puede ser vacío.\n";
+			retorno = "El campo " + nombreCampo + " no puede ser vacï¿½o.\n";
 
 		return retorno;
 	}
@@ -557,7 +583,7 @@ public class Controlador implements ActionListener, ListSelectionListener
 	private String validaString(String valor, String nombreCampo)
 	{
 		if (valor == null || valor.trim().isEmpty())
-			return "El campo " + nombreCampo + " no puede ser vacío.\n";
+			return "El campo " + nombreCampo + " no puede ser vacï¿½o.\n";
 
 		return "";
 	}
@@ -571,10 +597,10 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			if (!email.matches(patron))
 			{
-				retorno = "El Email ingresado no es válido.\n";
+				retorno = "El Email ingresado no es vï¿½lido.\n";
 			}
 		} else
-			retorno = "El campo Email no puede ser vacío.\n";
+			retorno = "El campo Email no puede ser vacï¿½o.\n";
 
 		return retorno;
 	}
@@ -597,14 +623,13 @@ public class Controlador implements ActionListener, ListSelectionListener
 				} catch (ParseException e)
 				{
 					retorno += "El campo " + nombreCampo
-							+ " no es una fecha válida\n";
+							+ " no es una fecha vï¿½lida\n";
 				}
 			} else
-				retorno += "El campo "
-						+ nombreCampo
+				retorno += "El campo " + nombreCampo
 						+ " tiene un formato incorrecto. Debe ser [dd/mm/aaaa]\n";
 		} else
-			retorno += "El campo " + nombreCampo + " no puede ser vacío\n";
+			retorno += "El campo " + nombreCampo + " no puede ser vacï¿½o\n";
 
 		return retorno;
 	}
@@ -627,8 +652,8 @@ public class Controlador implements ActionListener, ListSelectionListener
 		Date fechaNacimiento = new Date();
 		try
 		{
-			fechaNacimiento = format.parse(ventanaPersona
-					.getTxtFechaNacimiento().getText());
+			fechaNacimiento = format
+					.parse(ventanaPersona.getTxtFechaNacimiento().getText());
 		} catch (ParseException e1)
 		{
 			e1.printStackTrace();
@@ -681,13 +706,13 @@ public class Controlador implements ActionListener, ListSelectionListener
 		{
 			if (this.ventanaContacto.getTblContactos().getRowCount() > 0)
 			{
-				if (this.ventanaContacto.getTblContactos().getSelectedRow() >= 0)
+				if (this.ventanaContacto.getTblContactos()
+						.getSelectedRow() >= 0)
 				{
 					String valor = this.ventanaContacto
-							.getTblContactos()
-							.getValueAt(
-									this.ventanaContacto.getTblContactos()
-											.getSelectedRow(), 1).toString();
+							.getTblContactos().getValueAt(this.ventanaContacto
+									.getTblContactos().getSelectedRow(), 1)
+							.toString();
 
 					ventanaContacto.getTxtDescripcion().setText(valor);
 				}
@@ -702,19 +727,18 @@ public class Controlador implements ActionListener, ListSelectionListener
 				{
 					String codigoPostal = this.ventanaLocalidad
 							.getTablaLocalidades()
-							.getValueAt(
-									this.ventanaLocalidad.getTablaLocalidades()
-											.getSelectedRow(), 0).toString();
+							.getValueAt(this.ventanaLocalidad
+									.getTablaLocalidades().getSelectedRow(), 0)
+							.toString();
 					String nombreLocalidad = this.ventanaLocalidad
 							.getTablaLocalidades()
-							.getValueAt(
-									this.ventanaLocalidad.getTablaLocalidades()
-											.getSelectedRow(), 1).toString();
+							.getValueAt(this.ventanaLocalidad
+									.getTablaLocalidades().getSelectedRow(), 1)
+							.toString();
 
 					ventanaLocalidad.getTxtCodigoPostal().setText(codigoPostal);
 					ventanaLocalidad.getTxtNombre().setText(nombreLocalidad);
 				}
-
 			}
 		}
 	}
