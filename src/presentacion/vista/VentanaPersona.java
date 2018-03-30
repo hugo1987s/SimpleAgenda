@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import presentacion.controlador.Controlador;
+import java.awt.Toolkit;
 
 public class VentanaPersona extends JFrame
 {
@@ -37,6 +38,8 @@ public class VentanaPersona extends JFrame
 	public VentanaPersona(Controlador controlador)
 	{
 		super();
+		setTitle("Datos de la Persona");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("imagenes\\agenda.png"));
 		setResizable(false);
 		this.controlador = controlador;
 

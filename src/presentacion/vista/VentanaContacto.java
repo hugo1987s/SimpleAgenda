@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import presentacion.controlador.Controlador;
+import java.awt.Toolkit;
 
 public class VentanaContacto extends JFrame
 {
@@ -30,6 +31,8 @@ public class VentanaContacto extends JFrame
 	public VentanaContacto(Controlador controlador)
 	{
 		super();
+		setTitle("Contactos");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("imagenes\\agenda.png"));
 		this.controlador = controlador;
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

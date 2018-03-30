@@ -10,6 +10,7 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import presentacion.controlador.Controlador;
+import java.awt.Toolkit;
 
 public class VentanaLocalidad extends JFrame
 {
@@ -32,6 +33,8 @@ public class VentanaLocalidad extends JFrame
 	public VentanaLocalidad(Controlador controlador)
 	{
 		super();
+		setTitle("Localidades");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("imagenes\\agenda.png"));
 		this.controlador = controlador;
 
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

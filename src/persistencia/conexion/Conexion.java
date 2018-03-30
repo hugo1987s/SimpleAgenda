@@ -17,7 +17,7 @@ public class Conexion
 		{
 			Properties propiedadesConexion = new Properties();
 			FileInputStream archivoConfiguracion = new FileInputStream(
-					"src/configuracion/db.conf");
+					"Configuracion\\db.conf");
 			propiedadesConexion.load(archivoConfiguracion);
 			archivoConfiguracion.close();
 
@@ -37,6 +37,7 @@ public class Conexion
 		} catch (Exception e)
 		{
 			System.out.println("Conexion fallida");
+			throw new RuntimeException("Conexion fallida");
 		}
 	}
 
