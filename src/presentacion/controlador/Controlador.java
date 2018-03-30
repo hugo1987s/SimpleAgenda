@@ -58,6 +58,8 @@ public class Controlador implements ActionListener, ListSelectionListener
 
 	public void inicializar()
 	{
+		
+		
 		this.llenarTabla();
 		this.vista.show();
 	}

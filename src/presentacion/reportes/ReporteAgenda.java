@@ -84,7 +84,7 @@ public class ReporteAgenda
     	Properties p = new Properties();
     	try
 		{
-			p.load(new FileReader("src/configuracion/config.properties"));
+			p.load(new FileReader("Configuracion\\config.properties"));
 		} catch (FileNotFoundException e)
 		{
 			e.printStackTrace();
